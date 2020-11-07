@@ -13,16 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class Con1Controller extends AbstractController
 {
+    /** @var EntityManagerInterface  */
     private $entityManager;
-    private $em;
+
+    /** @var ServiceUser */
+    private $serviceUser;
     /**
      * Con1Controller constructor.
      * @param $entityManager
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, ServiceUser $serviceUser)
     {
         $this->entityManager = $entityManager;
-        $this->em=new ServiceUser($entityManager);
+        $this->serviceUser=$serviceUser;
     }
     /**
          * @Route("/", name="index")
@@ -46,7 +49,7 @@ class Con1Controller extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Usuario $user */
             $user = $form->getData();
-            $this->em->persistUser($user);
+            $this->serviceUser->persistUser($user);
             return $this->redirectToRoute('pagina3');
         }
         return $this->render(
@@ -63,10 +66,10 @@ class Con1Controller extends AbstractController
      /** visualizar
      * @Route("/pagina3/", name="pagina3")
      */
-    
+
      public function pagina3()
     {
-        $usuario=$this->em->findUser();
+        $usuario=$this->serviceUser->findUser();
         return $this->render('con1/pagina3.html.twig',array('busqueda'=>$usuario,'mensaje'=>''));
     }
 
@@ -86,7 +89,7 @@ class Con1Controller extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user=$form->getData();
-            $this->em->persistUser($user);
+            $this->serviceUser->persistUser($user);
             return $this->redirectToRoute('pagina3',['mensaje'=>'Usuario con id:'.$ide.' actualizado']);
         }
         return $this->render('con1/pagina4.html.twig', ['variable2' => 'Actualizar', 'nom'=>$nom, 'mail'=>$mail
@@ -98,7 +101,7 @@ class Con1Controller extends AbstractController
      */
     public function borrar($ide)
     {
-        $this->em->removeUser($ide);
+        $this->serviceUser->removeUser($ide);
         return $this->redirectToRoute('pagina3',['mensaje'=>'Usuario con id:'.$ide.' eliminado']);
     }
 
