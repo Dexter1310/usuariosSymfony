@@ -98,11 +98,16 @@ class Con1Controller extends AbstractController
         );
     }
     /**  Eliminar
-     * @Route("/pagina3/{ide}/", name="borrar")
+     * @Route("/pagina3/{id}/", requirements={"id" = "^\d+$"}, name="borrar")
+     * @ParamConverter("usuario", class="App\Entity\Usuario")
      */
-    public function borrar($ide)
+    public function borrar(Usuario $usuario)
     {
-        $this->serviceUser->removeUser($ide);
+        /**
+         * Guardo el id del usuario en la variable, antes de borrarlo (de otro modo, no tendria acceso al valor)
+         */
+        $ide = $usuario->getId();
+        $this->serviceUser->removeUser($usuario);
         return $this->redirectToRoute('pagina3',['mensaje'=>'Usuario con id:'.$ide.' eliminado']);
     }
 
