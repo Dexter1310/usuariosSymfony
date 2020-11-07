@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}{{ parent() }}{% endblock %}
+{% block title %}{{ parent() }}pagina-2{% endblock %}
+
+{% block body %}
+    <body>
+    <div class="container">
+        <br>
+        <h1>{{variable2}}</h1>
+        <div class="container">
+            <div class="pull-right">
+                <a href="{{path('index')}}"> <button class="btn btn-primary">Inicio</button></a>
+                <a href="{{path('pagina3')}}"><button class="btn btn-primary">Listado</button></a>
+            </div>
+        </div>
+        <hr>
+        <div class="container">
+            {{ form_start(formul, {'method': 'POST'}) }}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    {{ form_label(formul.nombre) }}
+                    {{ form_widget(formul.nombre, { 'attr': {'class': 'form-control','placeholder':nom,'id':'validationCustom01'} }) }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    {{ form_label(formul.mail) }}
+                    {{ form_widget(formul.mail, { 'attr': {'class': 'form-control','placeholder': mail,'id':'validationCustom02' }}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    {{ form_label(formul.adress) }}
+                    {{ form_widget(formul.adress, { 'attr': {'class': 'form-control','placeholder': direccion,'id':'validationCustom03' }}) }}
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{ form_label(formul.phone) }}
+                    {{ form_widget(formul.phone, { 'attr': {'class': 'form-control','placeholder': tlf,'id':'validationCustom04' }}) }}
+                </div>
+                <div class="col-md-3 mb-3">
+
+                    {{ form_label(formul.tipo) }}
+                    {{ form_widget(formul.tipo, { 'attr': {'class': 'form-control','id':'validationCustom05' }}) }}
+                </div>
+            </div>
+            {{ form_widget(formul.enviar, { 'attr': {'class': 'btn btn-primary','id':'validationCustom05' }}) }}
+            {{ form_end(formul) }}
+            <hr>
+        </div>
+
+    </div>
+
+    </body>
+{% endblock %}
+{% block javascripts %}{{ parent() }}{% endblock %}

@@ -1,0 +1,63 @@
+
+{% extends 'base.html.twig' %}
+{% block stylesheets %}{{ parent() }}{% endblock %}
+{% block title %}{{ parent() }}pagina-2{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+    <hr>
+    <h2 class="pull center">Listado de usuarios
+        <a href="{{path('pagina2',{'nom':'Nuevo Usuario','formu':'Rellene los campos y agregue el usuario'})}}"><button class="btn btn-success">Agregar Usuario</button></a>
+        <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
+
+    </h2>
+    <table id="list" class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Dirección</th>
+        <th scope="col">Teléfono</th>
+        <th scope="col">mail</th>
+        <th scope="col">Categoría</th>
+        <th scope="col">Opciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for usu in busqueda %}
+        <tr>
+            <th scope="row">{{ usu.id }}</th>
+            <td>{{ usu.nombre }}</td>
+            <td>{{ usu.adress }}</td>
+            <td>{{ usu.phone }}</td>
+            <td>{{ usu.mail }}</td>
+            <td>
+                {% if usu.tipo.codigo == 2 %}
+                    jefe
+                {% elseif  usu.tipo.codigo == 3%}
+                  empleado
+                {% else %}
+                    cliente
+                {% endif %}
+            </td>
+            <td><a href="{{path('borrar',{'ide': usu.id})}}"><button class="btn btn-danger">borrar</button></a>
+                <a href="{{path('update',{'ide': usu.id,'nom':'l','mail':'l','adress':'l','phone':0,'tipo':1})}}"><button class="btn btn-warning">editar</button></a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+        <a href="{{path('pagina2',{'nom':'Nuevo Usuario','formu':'Rellene los campos y agregue el usuario'})}}"><button class="btn btn-success">Agregar Usuario</button></a>
+        <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>   <center><p style='color:blue;'>{{ app.request.get('mensaje') }}</p></center>
+    <hr>
+
+
+</div>
+{% endblock %}
+{% block javascripts %}{{ parent() }}
+<script>
+    $(document).ready( function () {
+        $('#list').DataTable();
+    } );
+</script>
+{% endblock %}

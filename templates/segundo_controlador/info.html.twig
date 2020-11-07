@@ -1,0 +1,35 @@
+
+{% extends 'base.html.twig' %}
+{% block stylesheets %}{{ parent() }}{% endblock %}
+
+{% block title %}Informacion de mi{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>Información sobre mi ✅ <small style="color:grey; font-size: 40%">{{ nombre }} {{ apellidos }}</small></h1>
+        <ul>
+            <li>
+               <a href="https://github.com/Dexter1310?tab=repositories"> Repositorios git</a>
+            </li>
+            <li>
+                <a href="https://drive.google.com/file/d/1A59OcywiUdSQd7nm5xh7AQJCePk0gJB3/view?usp=sharing">CV</a>
+            </li>
+            <li>
+                <a href="https://www.youtube.com/watch?v=moA16IdUv0I&list=PLDbrnXa6SAzXBvGdqrSftpUJlOoThypJB&index=1">Cursos</a>
+            </li>
+            <li><a href="https://javiortimar.000webhostapp.com/">1ª WEB</a>
+            </li>
+            <li>
+                <a href="https://cheapcut.es/index.php#">Proyecto Cheap Cut</a>
+            </li>
+        </ul>
+        <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
+    </div>
+{% endblock %}
+{% block javascripts %}{{ parent() }}{% endblock %}

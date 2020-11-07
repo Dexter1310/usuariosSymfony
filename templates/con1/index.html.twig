@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}{{ parent() }}{% endblock %}
+{% block title %}{{ parent() }}pagina-1{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<body>
+<div class="container">
+<hr>
+<div class="example-wrapper">
+
+    <h1>Prueba de usuarios con synfony ✅  <scan style="font-size: 40%;color:grey">Fecha:{{ "now"|date("d/m/Y") }}</scan></h1><br>
+  <h2>GESTIÓN DE USUARIOS</h2>
+{#Declarar una varible o un condicional o un ciclo..#}
+{#    {% set v='MENU'%}#}
+{#  {% set b=['javi','pedro','marin'] %}#}
+
+{#  {% for nom in b %}#}
+{#    *{{ nom }}<br>#}
+
+{#  {% endfor %}#}
+
+{#    <scan style="color: red">{{ v }} </scan><br>#}
+
+    <a href="{{path('pagina2',{'nom':'Nuevo usuario','formu':'Formulario  agregar Usuario'})}}"><button class="btn btn-primary">NUEVO USUARIO</button></a>
+    <a href="{{path('pagina3',{'nom':'Bienvenido'})}}"><button class="btn btn-success">LISTADO DE USUARIOS</button></a>
+    <a href="{{path('info',{'nombre':'javi','apellidos':'orti'})}}"><button class="btn btn-dark">INFORMACIÓN</button></a>
+</div>
+{#    <h4>pruebas de manejo de variables</h4>#}
+{#{% set varia = 'hola'%}#}
+{# {{varia}}<br>#}
+{# {{sumados}}<br>s#}
+{#    {% if n1>n2 %}#}
+{#    n1 es mayor que n2#}
+{#    {% else %}#}
+{#    n2 es mayor que n1#}
+{#    {% endif %}#}
+{#    <p>Nombre comvertidos array y pasados en una lista</p>#}
+{#    {% set noms=nombres|split(',') %}#}
+
+{#    {% for no in noms %}#}
+{#       <ul>#}
+{#           <li> {{ no }}</li>#}
+{#       </ul>#}
+{#{% endfor %}#}
+<hr>
+</div>
+</body>
+{% endblock %}
+{% block javascripts %}{{ parent() }}{% endblock %}
+

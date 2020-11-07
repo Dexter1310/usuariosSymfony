@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}{{ parent() }}{% endblock %}
+{% block title %}Configurar usuarios{% endblock %}
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Información de Javier Orti ✅</h1>
+{#    <a href="{{path('info')}}"><button class="btn btn-dark">Información</button></a>#}
+    <a href="{{path('info',{'nombre':'javi','apellidos':'orti'})}}"><button class="btn btn-dark">INFORMACIÓN</button></a>
+    <a href="{{path('')}}"><button class="btn btn-dark">Inicio</button></a>
+</div>
+{% endblock %}
