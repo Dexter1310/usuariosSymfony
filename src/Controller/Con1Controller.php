@@ -79,6 +79,10 @@ class Con1Controller extends AbstractController
      */
     public function actualizar(Usuario $usuario,Request $request)
     {
+        /**
+         * Al método createForm, se le puede pasar el objeto con el que inicializar el formulario.
+         * En este caso inicializamos el formulario UsuType, con los valores del objeto $usuario
+         */
         $form = $this->createForm(UsuType::class, $usuario);
 
         if ($request->getMethod() == 'POST') {
