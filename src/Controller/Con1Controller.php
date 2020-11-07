@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class Con1Controller extends AbstractController
 {
@@ -74,26 +74,27 @@ class Con1Controller extends AbstractController
     }
 
     /**  Actualizar
-     * @Route("/pagina4/{ide}/{nom}/{mail}/{adress}/{phone}/{tipo}/", name="update")
+     * @Route("/pagina4/{id}", requirements={"id" = "^\d+$"}, name="update")
+     * @ParamConverter("usuario", class="App\Entity\Usuario")
      */
-    public function actualizar($ide,Request $request)
+    public function actualizar(Usuario $usuario,Request $request)
     {
-        $form = $this->createForm(UsuType::class);
-        $usuario = $this->entityManager->getRepository(Usuario::class)->find($ide);
-//        todo: We recover user data
-        $nom=$usuario->getNombre('nombre');
-        $phone=$usuario->getPhone('phone');
-        $adress=$usuario->getAdress('adress');
-        $mail=$usuario->getMail('mail');
-        $tipo=$usuario->getTipo('tipo');
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user=$form->getData();
-            $this->serviceUser->persistUser($user);
-            return $this->redirectToRoute('pagina3',['mensaje'=>'Usuario con id:'.$ide.' actualizado']);
+        $form = $this->createForm(UsuType::class, $usuario);
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $user = $form->getData();
+                $this->serviceUser->persistUser($user);
+
+                return $this->redirectToRoute(
+                    'pagina3',
+                    ['mensaje' => 'Usuario con id:'.$usuario->getId().' actualizado']
+                );
+            }
         }
-        return $this->render('con1/pagina4.html.twig', ['variable2' => 'Actualizar', 'nom'=>$nom, 'mail'=>$mail
-               ,'direccion'=>$adress,'tlf'=>$phone ,'tipo'=>$tipo,'formul'=>$form->createView()]
+
+        return $this->render('con1/pagina4.html.twig', ['variable2' => 'Actualizar', 'usuario'=>$usuario, 'formul'=>$form->createView()]
         );
     }
     /**  Eliminar

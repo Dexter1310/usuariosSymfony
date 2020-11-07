@@ -19,21 +19,21 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     {{ form_label(formul.nombre) }}
-                    {{ form_widget(formul.nombre, { 'attr': {'class': 'form-control','placeholder':nom,'id':'validationCustom01'} }) }}
+                    {{ form_widget(formul.nombre, { 'attr': {'class': 'form-control','placeholder':usuario.nom,'id':'validationCustom01'} }) }}
                 </div>
                 <div class="col-md-6 mb-3">
                     {{ form_label(formul.mail) }}
-                    {{ form_widget(formul.mail, { 'attr': {'class': 'form-control','placeholder': mail,'id':'validationCustom02' }}) }}
+                    {{ form_widget(formul.mail, { 'attr': {'class': 'form-control','placeholder': usuario.mail,'id':'validationCustom02' }}) }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     {{ form_label(formul.adress) }}
-                    {{ form_widget(formul.adress, { 'attr': {'class': 'form-control','placeholder': direccion,'id':'validationCustom03' }}) }}
+                    {{ form_widget(formul.adress, { 'attr': {'class': 'form-control','placeholder': usuario.direccion,'id':'validationCustom03' }}) }}
                 </div>
                 <div class="col-md-3 mb-3">
                     {{ form_label(formul.phone) }}
-                    {{ form_widget(formul.phone, { 'attr': {'class': 'form-control','placeholder': tlf,'id':'validationCustom04' }}) }}
+                    {{ form_widget(formul.phone, { 'attr': {'class': 'form-control','placeholder': usuario.tlf,'id':'validationCustom04' }}) }}
                 </div>
                 <div class="col-md-3 mb-3">
 
