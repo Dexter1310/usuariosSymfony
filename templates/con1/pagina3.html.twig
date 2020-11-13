@@ -14,7 +14,7 @@
 
     <hr>
     <h2 class="pull center">Listado de usuarios
-        <a href="{{path('pagina2',{'nom':'Nuevo Usuario','formu':'Rellene los campos y agregue el usuario'})}}"><button class="btn btn-success">Agregar Usuario</button></a>
+        <a href="{{path('pagina2')}}"><button class="btn btn-success">Agregar Usuario</button></a>
         <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
 
     </h2>
@@ -56,7 +56,8 @@
     {% endfor %}
     </tbody>
     </table>
-        <a href="{{path('pagina2',{'nom':'Nuevo Usuario','formu':'Rellene los campos y agregue el usuario'})}}"><button class="btn btn-success">Agregar Usuario</button></a>
+        <a href="{{path('administrador')}}"><button class="btn btn-primary"> Administradores</button></a>
+        <a href="{{path('pagina2')}}"><button class="btn btn-success">Agregar Usuario</button></a>
         <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>   <center><p style='color:blue;'>{{ app.request.get('mensaje') }}</p></center>
     <hr>
 </div>
@@ -65,6 +66,7 @@
 <script>
     $(document).ready( function () {
         $('#list').DataTable();
+        $('#listAdmin').DataTable();
         $('tr[data-href]').on("click", function() {
             document.location = $(this).data('href');
         });

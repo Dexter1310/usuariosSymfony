@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}{{ parent() }}{% endblock %}
+{% block title %}Administradores{% endblock %}
+
+{% block body %}
+<div class="container">
+    <hr>
+    <h1> {{ controller_name }}! ✅</h1>
+    <a href="{{path('index')}}"><button class="btn btn-warning">Inicio</button></a>
+    <a href="{{path('pagina3')}}"><button class="btn btn-success">Listado de usuarios</button></a>
+    <a href="{{path('adAdmin')}}"><button class="btn btn-dark">Agrega adminstrador</button></a><hr>
+<div class="container" style="text-align: center"><i style="color: grey; font-weight: bold;text-align: center"> {{ app.request.get('message') }}</i></div><br>
+    <table id="listAdmin" class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Categoría</th>
+            <th scope="col">Opciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for admin in busqueda %}
+            <tr data-href="{{path('admin_show',{'id':admin.id})}}" >
+                <th scope="row">{{ admin.id }}</th>
+                <td>{{ admin.nombre }}</td>
+                <td>
+                    {% if admin.tipo == 1 %}
+                        Administrador principal
+                    {% elseif  admin.tipo == 2%}
+                        Administrador
+                    {% elseif  admin.tipo == 3%}
+                        Oficial 1
+                    {% else %}
+                        Oficial 2 o 3
+                    {% endif %}
+                </td>
+                <td><a href="{{path('deleteAdmin',{'id': admin.id})}}"><button class="btn btn-danger">Borrar Ad.</button></a>
+                    <a href="{{path('updateAdmin',{'id': admin.id})}}">
+                        <button class="btn btn-warning">Editar Ad.</button></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block javascripts %}{{ parent() }}
+        <script>
+            $(document).ready( function () {
+                $('#listAdmin').DataTable();
+                $('tr[data-href]').on("click", function() {
+                    document.location = $(this).data('href');
+                });
+            } );
+        </script>
+{% endblock %}

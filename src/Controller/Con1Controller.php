@@ -41,16 +41,16 @@ class Con1Controller extends AbstractController
      * @Route("/", name="index")
      */
     public function index(){
-        $t=$this->men->sendMail();
-        $t=$this->json(['username' => 'jane.doe','apellidos'=>'orti']);
-        $this->addFlash('mensaje',$t);
+//        $t=$this->men->sendMail();
+//        $t=$this->json(['username' => 'jane.doe','apellidos'=>'orti']);
+//        $this->addFlash('mensaje',$t);
         return $this->render('con1/index.html.twig');
     }
 
     /**  crear
-     * @Route("/pagina2/{nom}/{formu}/", name="pagina2", methods={"POST","GET"} )
+     * @Route("/pagina2/", name="pagina2", methods={"POST","GET"} )
      */
-    public function pagina2($nom,$formu,Request $request)
+    public function pagina2(Request $request)
     {
         $form = $this->createForm(UsuType::class);
         $form->handleRequest($request);
@@ -65,8 +65,6 @@ class Con1Controller extends AbstractController
             'con1/pagina2.html.twig',
             [
                 'variable2' => 'Agregar usuario',
-                'parametro1' => $nom,
-                'form' => $formu,
                 'formul' => $form->createView(),
             ]
         );
@@ -130,7 +128,7 @@ class Con1Controller extends AbstractController
 //    Todo: encontrar usuario por id
     /**
      * @Route("/user/{id}", name="user_show")
-     ** @ParamConverter("usuario", class="App\Entity\Usuario")
+     * @ParamConverter("usuario", class="App\Entity\Usuario")
      */
     public function show(Usuario $usuario)
     {
