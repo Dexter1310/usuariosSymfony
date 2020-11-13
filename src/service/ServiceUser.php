@@ -27,6 +27,7 @@ class ServiceUser
        return $this->entityManager->getRepository(Usuario::class)->findAll();
     }
     public function removeUser(Usuario $usuario){
+//        $usuario = $this->entityManager->getRepository(Usuario::class)->find($ide);
         $this->entityManager->remove($usuario);
         $this->entityManager->flush();
 //        return $us;
