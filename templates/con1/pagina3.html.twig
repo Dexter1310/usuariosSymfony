@@ -6,6 +6,12 @@
 {% block body %}
 
     <div class="container">
+        <h1> {{ mensaje }}</h1>
+        {% for mess in app.flashes('success') %}
+            <div class="alert alert-success">{{ mess }}</div>
+        {% endfor %}
+        <hr>
+
     <hr>
     <h2 class="pull center">Listado de usuarios
         <a href="{{path('pagina2',{'nom':'Nuevo Usuario','formu':'Rellene los campos y agregue el usuario'})}}"><button class="btn btn-success">Agregar Usuario</button></a>
@@ -25,8 +31,9 @@
     </tr>
     </thead>
     <tbody>
+
     {% for usu in busqueda %}
-        <tr>
+        <tr data-href="{{path('user_show',{'id':usu.id})}}" >
             <th scope="row">{{ usu.id }}</th>
             <td>{{ usu.nombre }}</td>
             <td>{{ usu.adress }}</td>
@@ -41,23 +48,28 @@
                     cliente
                 {% endif %}
             </td>
-            <td><a href="{{path('borrar',{'ide': usu.id})}}"><button class="btn btn-danger">borrar</button></a>
-                <a href="{{path('update',{'ide': usu.id,'nom':'l','mail':'l','adress':'l','phone':0,'tipo':1})}}"><button class="btn btn-warning">editar</button></a></td>
+            <td><a href="{{path('borrar',{'id': usu.id})}}"><button class="btn btn-danger">borrar</button></a>
+                <a href="{{path('update',{'id': usu.id,'nom':'l','mail':'l','adress':'l','phone':0,'tipo':1})}}"><button class="btn btn-warning">editar</button></a></td>
+
         </tr>
+
     {% endfor %}
     </tbody>
     </table>
         <a href="{{path('pagina2',{'nom':'Nuevo Usuario','formu':'Rellene los campos y agregue el usuario'})}}"><button class="btn btn-success">Agregar Usuario</button></a>
         <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>   <center><p style='color:blue;'>{{ app.request.get('mensaje') }}</p></center>
     <hr>
-
-
 </div>
 {% endblock %}
 {% block javascripts %}{{ parent() }}
 <script>
     $(document).ready( function () {
         $('#list').DataTable();
+        $('tr[data-href]').on("click", function() {
+            document.location = $(this).data('href');
+        });
+
+
     } );
 </script>
 {% endblock %}
