@@ -2,13 +2,13 @@
 
 
 namespace App\service;
+use App\Entity\Administrador;
 use App\Entity\Usuario;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ServiceUser
 {
     private $entityManager;
-
     /**
      * ServiceUser constructor.
      * @param $entityManager
@@ -17,7 +17,6 @@ class ServiceUser
     {
         $this->entityManager = $entityManager;
     }
-
     public function persistUser (Usuario $us){
         $this->entityManager->persist($us);
         $this->entityManager->flush();
@@ -27,11 +26,26 @@ class ServiceUser
        return $this->entityManager->getRepository(Usuario::class)->findAll();
     }
     public function removeUser(Usuario $usuario){
-//        $usuario = $this->entityManager->getRepository(Usuario::class)->find($ide);
         $this->entityManager->remove($usuario);
         $this->entityManager->flush();
-//        return $us;
     }
+
+//   Todo:crear o actualizar administrador:
+    public function persistAdmin (Administrador $admin){
+        $this->entityManager->persist($admin);
+        $this->entityManager->flush();
+        return $admin;
+    }
+//   Todo:busqueda de todos los administradores
+    public function findAdmin(){
+        return $this->entityManager->getRepository(Administrador::class)->findAll();
+    }
+//   Todo:eliminar administrador:
+    public function removeAdmin(Administrador $administrador){
+        $this->entityManager->remove($administrador);
+        $this->entityManager->flush();
+    }
+
 
 
 }

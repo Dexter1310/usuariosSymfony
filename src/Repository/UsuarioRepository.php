@@ -6,6 +6,7 @@ use App\Entity\Usuario;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
+
 /**
  * @method Usuario|null find($id, $lockMode = null, $lockVersion = null)
  * @method Usuario|null findOneBy(array $criteria, array $orderBy = null)
@@ -17,6 +18,16 @@ class UsuarioRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Usuario::class);
+    }
+
+    public function findUserType( $tipo): array
+    {
+        return  $this->getEntityManager()->createQuery(
+            'SELECT usu.id,usu.nombre,usu.mail 
+                  FROM App\Entity\Usuario usu
+                   WHERE usu.tipo =:type')
+            ->setParameter('type',$tipo)
+            ->getResult();
     }
 
     // /**

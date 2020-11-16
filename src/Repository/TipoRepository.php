@@ -19,6 +19,8 @@ class TipoRepository extends ServiceEntityRepository
         parent::__construct($registry, Tipo::class);
     }
 
+//
+
     // /**
     //  * @return Tipo[] Returns an array of Tipo objects
     //  */

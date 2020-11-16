@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}{{ parent() }}{% endblock %}
+{% block title %}{{ parent() }}pagina-2{% endblock %}
+
+{% block body %}
+    <body>
+
+    <div class="container">
+        <br>
+        <div class="container">
+            <div class="pull-right">
+<h1>{{ titulo }}</h1>
+                <a href="{{path('index')}}"> <button class="btn btn-dark">Inicio</button></a>
+                <a href="{{path('administrador')}}"> <button class="btn btn-dark">volver</button></a>
+                <a href="{{path('index')}}"> <button class="btn btn-primary"> Listado Administradores</button></a>
+{#                <a href="{{path('pagina3')}}"><button class="btn btn-success">Listado</button></a>#}
+            </div>
+        </div>
+        <hr>
+        <div class="container">
+            {{ form_start(formulAdmin, {'method': 'POST'}) }}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    {{ form_label(formulAdmin.nombre) }}
+                    {{ form_widget(formulAdmin.nombre, { 'attr': {'class': 'form-control','placeholder':usuAdmin.nombre ,'id':'validationCustom01'} }) }}
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{ form_label(formulAdmin.tipo) }}
+                    {{ form_widget(formulAdmin.tipo, { 'attr': {'class': 'form-control','id':'validationCustom05' }}) }}
+                </div>
+            </div>
+
+            {{ form_widget(formulAdmin.agregar, { 'attr': {'class': 'btn btn-primary','id':'validationCustom05','value':'Agregar' }}) }}
+            {{ form_end(formulAdmin) }}
+
+            <hr>
+        </div>
+
+    </div>
+
+    </body>
+{% endblock %}
+{% block javascripts %}{{ parent() }}{% endblock %}
