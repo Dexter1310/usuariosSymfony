@@ -11,8 +11,9 @@
             <div class="alert alert-success">{{ mess }}</div>
         {% endfor %}
         <hr>
-
-    <hr>
+        {% for usuar in usua %}
+{{ usuar.nombre}}
+{% endfor %}
     <h2 class="pull center">Listado de usuarios
         <a href="{{path('pagina2')}}"><button class="btn btn-success">Agregar Usuario</button></a>
         <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
@@ -58,8 +59,28 @@
     </table>
         <a href="{{path('administrador')}}"><button class="btn btn-primary"> Administradores</button></a>
         <a href="{{path('pagina2')}}"><button class="btn btn-success">Agregar Usuario</button></a>
-        <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>   <center><p style='color:blue;'>{{ app.request.get('mensaje') }}</p></center>
+        <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
+{#        <center><p style='color:red;'>{{ app.request.get('mens.tipo') }}</p></center>#}
+
+        {% for me  in  app.request.get('mens')%}
+            {{ me }}
+        {% endfor %}
+
+
+        <center><p style='color:blue;'>{{ app.request.get('mensaje') }}</p></center>
     <hr>
+        <div class="container">
+            {{ form_start(formulari, {'method': 'POST'}) }}
+            <div class="row">
+                <div class="col-md-6 ">
+                    {{ form_widget(formulari.tipo, { 'attr': {'class': 'form-control','placeholder': 'Filtra tipo','id':'validationCustom03' }}) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_widget(formulari.Filtrar, { 'attr': {'class': 'btn btn-primary','id':'validationCustom04' }}) }}
+                </div>
+            </div>
+            {{ form_end(formulari) }}
+        </div>
 </div>
 {% endblock %}
 {% block javascripts %}{{ parent() }}

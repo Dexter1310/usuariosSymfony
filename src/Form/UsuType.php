@@ -21,7 +21,7 @@ class UsuType extends AbstractType
             ->add('mail')
             ->add('adress')
             ->add('phone')
-            ->add('tipo',EntityType::class,['class'=>Usuario::class,'choice_label'=>'nombre'])
+            ->add('tipo',EntityType::class,['class'=>Tipo::class,'choice_label'=>'nombre'])
             ->add('enviar',SubmitType::class)
         ;
     }

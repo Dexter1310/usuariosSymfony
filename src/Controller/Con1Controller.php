@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Tipo;
+use App\Repository\UsuarioRepository;
 use App\service\NewMessage;
 use App\Entity\Usuario;
 use App\Form\UsuType;
@@ -9,6 +10,8 @@ use App\service\ServiceUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -59,7 +62,6 @@ class Con1Controller extends AbstractController
             $user = $form->getData();
             $this->serviceUser->persistUser($user);
             return $this->redirectToRoute('pagina3');
-
         }
         return $this->render(
             'con1/pagina2.html.twig',
@@ -74,11 +76,34 @@ class Con1Controller extends AbstractController
      * @Route("/pagina3/", name="pagina3")
      */
 
-    public function pagina3Action()
+    public function pagina3Action(Request $request)
     {
         $usuario=$this->serviceUser->findUser();
+        $form = $this->createFormBuilder()->add('tipo',ChoiceType::class, [
+            'choices' => [
+                'Administradores' => [
+                    'jefe' => 1,
+                    'cliente' => 2,
+                    'empleado'=>3,
+                ],
+            ],
+        ])->add('Filtrar',SubmitType::class)->getForm();
 
-        return $this->render('con1/pagina3.html.twig',['busqueda'=>$usuario,'mensaje'=>'']);
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $user = $form->getData();
+//                $this->serviceUser->persistUser($user);
+//                $this->addFlash(
+//                    'success','Usuario '.$usuario->getNombre().' actualizado.'
+//                );
+//                $userCreate='Usuario '.$usuario->getNombre().' actualizado.';
+                return $this->redirectToRoute('pagina3', ['mens' => $user]);
+            }
+        }
+
+        $usua=$this->entityManager->getRepository(Usuario::class)->findUserType(2);
+        return $this->render('con1/pagina3.html.twig',['busqueda'=>$usuario,'mensaje'=>'','usua'=>$usua,'formulari'=>$form->createView()]);
     }
 
     /**  Actualizar
@@ -98,13 +123,10 @@ class Con1Controller extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 $user = $form->getData();
                 $this->serviceUser->persistUser($user);
-
                 $this->addFlash(
                     'success','Usuario '.$usuario->getNombre().' actualizado.'
-
                 );
                 $userCreate='Usuario '.$usuario->getNombre().' actualizado.';
-
                 return $this->redirectToRoute('pagina3', ['mensaje' => $userCreate]);
             }
         }
@@ -141,6 +163,17 @@ class Con1Controller extends AbstractController
         return $this->redirectToRoute('pagina3',['mensaje'=>'Usuario: '.$usuario->getNombre().'.']);
 
     }
+    /**
+     * @Route("/user/{type}", name="userType", methods={"POST"})
+     */
+//    public function showUseType($type)
+//    {
+//
+//
+//
+//        return $this->redirectToRoute('pagina3',['mensaje'=>'Usuario: '.$usuario->getNombre().'.']);
+//
+//    }
 
 
 
