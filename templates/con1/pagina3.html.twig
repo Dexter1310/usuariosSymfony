@@ -7,13 +7,19 @@
 
     <div class="container">
         <h1> {{ mensaje }}</h1>
-        {% for mess in app.flashes('success') %}
+
+            {% for mess in app.flashes('success') %}
             <div class="alert alert-success">{{ mess }}</div>
         {% endfor %}
         <hr>
+        <scan style="color: #005cbf">
+            <ul>
         {% for usuar in usua %}
-{{ usuar.nombre}}
+            <li>{{ usuar.nombre}}    - usuario tipo : {{mens}}</li>
 {% endfor %}
+            </ul>
+    </scan>
+
     <h2 class="pull center">Listado de usuarios
         <a href="{{path('pagina2')}}"><button class="btn btn-success">Agregar Usuario</button></a>
         <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
@@ -41,9 +47,9 @@
             <td>{{ usu.phone }}</td>
             <td>{{ usu.mail }}</td>
             <td>
-                {% if usu.tipo.codigo == 2 %}
+                {% if usu.tipo.codigo == 3%}
                     jefe
-                {% elseif  usu.tipo.codigo == 3%}
+                {% elseif  usu.tipo.codigo == 2%}
                   empleado
                 {% else %}
                     cliente
@@ -51,9 +57,7 @@
             </td>
             <td><a href="{{path('borrar',{'id': usu.id})}}"><button class="btn btn-danger">borrar</button></a>
                 <a href="{{path('update',{'id': usu.id,'nom':'l','mail':'l','adress':'l','phone':0,'tipo':1})}}"><button class="btn btn-warning">editar</button></a></td>
-
         </tr>
-
     {% endfor %}
     </tbody>
     </table>
@@ -61,11 +65,6 @@
         <a href="{{path('pagina2')}}"><button class="btn btn-success">Agregar Usuario</button></a>
         <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
 {#        <center><p style='color:red;'>{{ app.request.get('mens.tipo') }}</p></center>#}
-
-        {% for me  in  app.request.get('mens')%}
-            {{ me }}
-        {% endfor %}
-
 
         <center><p style='color:blue;'>{{ app.request.get('mensaje') }}</p></center>
     <hr>
@@ -91,8 +90,6 @@
         $('tr[data-href]').on("click", function() {
             document.location = $(this).data('href');
         });
-
-
     } );
 </script>
 {% endblock %}

@@ -79,6 +79,8 @@ class Con1Controller extends AbstractController
     public function pagina3Action(Request $request)
     {
         $usuario=$this->serviceUser->findUser();
+        /** @var  $number int */
+     $number=null;
         $form = $this->createFormBuilder()->add('tipo',ChoiceType::class, [
             'choices' => [
                 'Administradores' => [
@@ -98,12 +100,15 @@ class Con1Controller extends AbstractController
 //                    'success','Usuario '.$usuario->getNombre().' actualizado.'
 //                );
 //                $userCreate='Usuario '.$usuario->getNombre().' actualizado.';
-                return $this->redirectToRoute('pagina3', ['mens' => $user]);
+
+                $user=implode($user);
+                $number=$user;
+
             }
         }
+        $usua=$this->entityManager->getRepository(Usuario::class)->findUserType($number);
 
-        $usua=$this->entityManager->getRepository(Usuario::class)->findUserType(2);
-        return $this->render('con1/pagina3.html.twig',['busqueda'=>$usuario,'mensaje'=>'','usua'=>$usua,'formulari'=>$form->createView()]);
+        return $this->render('con1/pagina3.html.twig',['busqueda'=>$usuario,'mensaje'=>'','usua'=>$usua,'mens'=>$number,'formulari'=>$form->createView()]);
     }
 
     /**  Actualizar
