@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Tipo;
+use App\Form\AdministradorType;
 use App\Repository\UsuarioRepository;
 use App\service\NewMessage;
 use App\Entity\Usuario;
@@ -81,33 +82,16 @@ class Con1Controller extends AbstractController
         $usuario=$this->serviceUser->findUser();
         /** @var  $number int */
      $number=null;
-        $form = $this->createFormBuilder()->add('tipo',ChoiceType::class, [
-            'choices' => [
-                'Administradores' => [
-                    'jefe' => 1,
-                    'cliente' => 2,
-                    'empleado'=>3,
-                ],
-            ],
-        ])->add('Filtrar',SubmitType::class)->getForm();
-
+        $form= $this->createForm(AdministradorType::class);
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $user = $form->getData();
-//                $this->serviceUser->persistUser($user);
-//                $this->addFlash(
-//                    'success','Usuario '.$usuario->getNombre().' actualizado.'
-//                );
-//                $userCreate='Usuario '.$usuario->getNombre().' actualizado.';
-
                 $user=implode($user);
                 $number=$user;
-
             }
         }
         $usua=$this->entityManager->getRepository(Usuario::class)->findUserType($number);
-
         return $this->render('con1/pagina3.html.twig',['busqueda'=>$usuario,'mensaje'=>'','usua'=>$usua,'mens'=>$number,'formulari'=>$form->createView()]);
     }
 
@@ -173,11 +157,7 @@ class Con1Controller extends AbstractController
      */
 //    public function showUseType($type)
 //    {
-//
-//
-//
 //        return $this->redirectToRoute('pagina3',['mensaje'=>'Usuario: '.$usuario->getNombre().'.']);
-//
 //    }
 
 

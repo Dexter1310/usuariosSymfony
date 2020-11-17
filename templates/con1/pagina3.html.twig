@@ -2,9 +2,7 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}{{ parent() }}{% endblock %}
 {% block title %}{{ parent() }}pagina-2{% endblock %}
-
 {% block body %}
-
     <div class="container">
         <h1> {{ mensaje }}</h1>
 
@@ -16,10 +14,9 @@
             <ul>
         {% for usuar in usua %}
             <li>{{ usuar.nombre}}    - usuario tipo : {{mens}}</li>
-{% endfor %}
+        {% endfor %}
             </ul>
     </scan>
-
     <h2 class="pull center">Listado de usuarios
         <a href="{{path('pagina2')}}"><button class="btn btn-success">Agregar Usuario</button></a>
         <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
@@ -65,7 +62,6 @@
         <a href="{{path('pagina2')}}"><button class="btn btn-success">Agregar Usuario</button></a>
         <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
 {#        <center><p style='color:red;'>{{ app.request.get('mens.tipo') }}</p></center>#}
-
         <center><p style='color:blue;'>{{ app.request.get('mensaje') }}</p></center>
     <hr>
         <div class="container">

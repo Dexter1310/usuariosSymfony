@@ -46,6 +46,13 @@ class ServiceUser
         $this->entityManager->flush();
     }
 
+    //Todo: buscar por parametro en createQueryBuilder():
+
+    public function findParameter(){
+
+
+    }
+
 
 
 }
