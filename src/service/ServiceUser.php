@@ -5,6 +5,7 @@ namespace App\service;
 use App\Entity\Administrador;
 use App\Entity\Usuario;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 
 class ServiceUser
 {
@@ -50,6 +51,9 @@ class ServiceUser
 
     public function findParameter(){
 
+        /** @var QueryBuilder $qb */
+        $qb = $this->entityManager->getRepository(Administrador::class)->createQueryBuilder('ad');
+        $qb->select('ad');
 
     }
 
