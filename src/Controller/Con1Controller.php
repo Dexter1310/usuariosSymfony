@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Entity\Administrador;
 use App\Entity\Tipo;
 use App\Form\AdministradorType;
 use App\Repository\UsuarioRepository;
@@ -8,6 +9,7 @@ use App\service\NewMessage;
 use App\Entity\Usuario;
 use App\Form\UsuType;
 use App\service\ServiceUser;
+use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response;
@@ -18,6 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Yaml\Tests\A;
 
 class Con1Controller extends AbstractController
 {
@@ -44,11 +47,26 @@ class Con1Controller extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(){
+    public function index(Request $request){
 //        $t=$this->men->sendMail();
 //        $t=$this->json(['username' => 'jane.doe','apellidos'=>'orti']);
 //        $this->addFlash('mensaje',$t);
-        return $this->render('con1/index.html.twig');
+        $code=null;
+        $formCode = $this->createFormBuilder()->add('codigo')
+            ->add('buscar',SubmitType::class)->getForm();
+        if ($request->getMethod() == 'POST') {
+            $formCode->handleRequest($request);
+            if ($formCode->isSubmitted() && $formCode->isValid()) {
+                $userCode = $formCode->getData();
+
+                $code=$userCode['codigo'];
+
+//                return $this->redirectToRoute('index',['nombre'=>$usu]);
+            }
+        }
+        $usu=$this->serviceUser->findUsuarioByCodigoTipo($code);
+        return $this->render("con1/index.html.twig",['formCode'=>$formCode->createView(),'nombre'=>$usu]);
+
     }
 
     /**  crear
@@ -82,7 +100,15 @@ class Con1Controller extends AbstractController
         $usuario=$this->serviceUser->findUser();
         /** @var  $number int */
      $number=null;
-        $form= $this->createForm(AdministradorType::class);
+        $form = $this->createFormBuilder()->add('tipo',ChoiceType::class, [
+            'choices' => [
+                'Administradores' => [
+                    'jefe' => 1,
+                    'cliente' => 2,
+                    'empleado'=>3,
+                ],
+            ],
+        ])->add('Filtrar',SubmitType::class)->getForm();
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
@@ -153,30 +179,26 @@ class Con1Controller extends AbstractController
 
     }
     /**
-     * @Route("/user/{type}", name="userType", methods={"POST"})
+     * @Route("/findAdmin", name="findAdmin",methods={"POST","GET"})
      */
-//    public function showUseType($type)
-//    {
-//        return $this->redirectToRoute('pagina3',['mensaje'=>'Usuario: '.$usuario->getNombre().'.']);
-//    }
+    public function findAdmin(Request $request)
+    {
+        $formAdmin=$this->createForm(AdministradorType::class);
+        if ($request->getMethod() == 'POST') {
+            $formAdmin->handleRequest($request);
+            if ($formAdmin->isSubmitted() && $formAdmin->isValid()) {
+                $admin = $formAdmin->getData();
+                $mens=$this->serviceUser->findParameter($admin->getTipo());
+                $nombre=$mens->getNombre();
+                return $this->redirectToRoute('pagina3',['mensaje'=>$nombre]);
+            }
+            }
+        return $this->render("con1/findAdmin.html.twig",['formAdmin'=>$formAdmin->createView()]);
+    }
 
 
 
-//    /**
-//     * @Route("/crear/", name="pagina4")
-//     */
-//
-///// TODO:MODO PRUEBA : crear manualmente desde la vista /crear desde la url
-//    public function  crear()
-//    {
-//        $entityManager = $this->getDoctrine()->getManager();
-//        $usuari = new Usuario('Pablo', "pablo@gmail.com", "Santmonica", 699594539);
-//        $tipo = new Tipo('jefe',2);
-//        $usuari->setTipo($tipo);
-//        $entityManager->persist($usuari);
-//        $entityManager->flush();
-//        return $this->render('con1/succes.html.twig');
-//
-//    }
+
+
 
 }

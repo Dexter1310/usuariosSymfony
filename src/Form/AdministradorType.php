@@ -16,7 +16,6 @@ class AdministradorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre')
             ->add('tipo',ChoiceType::class, [
                 'choices' => [
                     'Administradores' => [
@@ -29,7 +28,7 @@ class AdministradorType extends AbstractType
                     ],
                 ],
             ])
-            ->add('agregar',SubmitType::class)
+            ->add('Filtrar',SubmitType::class)
         ;
     }
 

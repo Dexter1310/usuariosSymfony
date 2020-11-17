@@ -61,8 +61,13 @@
         <a href="{{path('administrador')}}"><button class="btn btn-primary"> Administradores</button></a>
         <a href="{{path('pagina2')}}"><button class="btn btn-success">Agregar Usuario</button></a>
         <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
+        <a href="{{ path('findAdmin')}}"><button class="btn btn-info">Encotrar administrador por tipo</button></a>
+
+
+
 {#        <center><p style='color:red;'>{{ app.request.get('mens.tipo') }}</p></center>#}
         <center><p style='color:blue;'>{{ app.request.get('mensaje') }}</p></center>
+
     <hr>
         <div class="container">
             {{ form_start(formulari, {'method': 'POST'}) }}

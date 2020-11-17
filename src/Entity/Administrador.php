@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Administrador
 {
+    const admin="admin";
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
