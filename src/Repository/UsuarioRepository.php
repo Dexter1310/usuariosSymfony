@@ -15,24 +15,29 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class UsuarioRepository extends ServiceEntityRepository
 {
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Usuario::class);
     }
-
-    public function findUserType( $tipo): array
+    public function findUserType($tipo): array
     {
-        return  $this->getEntityManager()->createQuery(
-            'SELECT usu.id,usu.nombre,usu.mail 
-                  FROM App\Entity\Usuario usu
-                   WHERE usu.tipo =:type')
-            ->setParameter('type',$tipo)
-            ->getResult();
+        //Todo: ejemplo de createQuery()
+//        return  $this->getEntityManager()->createQuery(
+//            'SELECT usu.id,usu.nombre,usu.mail
+//                  FROM App\Entity\Usuario usu
+//                   WHERE usu.tipo =:type')
+//            ->setParameter('type',$tipo)
+//            ->getResult();
+        //Todo: ejemplo de createQueryBuilder()
+        $consulta=$this->getEntityManager()->getRepository(Usuario::class)->createQueryBuilder(Usuario::alias);
+        return $consulta->where(Usuario::alias.'.tipo=:type')->setParameter('type',$tipo)->getQuery()->execute();
+
     }
 
     // /**
     //  * @return Usuario[] Returns an array of Usuario objects
-    //  */
+    //  *./
     /*
     public function findByExampleField($value)
     {

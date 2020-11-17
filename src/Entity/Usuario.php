@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Usuario
 {
+    const alias ="alias";
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
