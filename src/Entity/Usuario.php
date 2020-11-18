@@ -42,6 +42,11 @@ class Usuario
      * @ORM\ManyToOne(targetEntity="App\Entity\Tipo", inversedBy="Usuario",cascade={"persist"})
      */
     private $tipo;
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Administrador", inversedBy="Usuario",cascade={"persist"})
+     */
+    private $admin;
+
 
     /**
      * Usuario constructor.
@@ -127,6 +132,23 @@ class Usuario
     {
         $this->tipo = $tipo;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * @param mixed $admin
+     */
+    public function setAdmin($admin): void
+    {
+        $this->admin = $admin;
+    }
+
 
 
 }

@@ -13,7 +13,7 @@
         <scan style="color: #005cbf">
             <ul>
         {% for usuar in usua %}
-            <li>{{ usuar.nombre}}    - usuario tipo : {{mens}}</li>
+            <li>{{ usuar.nombre}}    - usuario tipo : {{mens}} - {{ usuar.tipo.nombre }}</li>
         {% endfor %}
             </ul>
     </scan>
@@ -30,7 +30,8 @@
         <th scope="col">Dirección</th>
         <th scope="col">Teléfono</th>
         <th scope="col">mail</th>
-        <th scope="col">Categoría</th>
+        <th scope="col">Administrador Asociado</th>
+        <th scope="col">Tipo</th>
         <th scope="col">Opciones</th>
     </tr>
     </thead>
@@ -43,14 +44,10 @@
             <td>{{ usu.adress }}</td>
             <td>{{ usu.phone }}</td>
             <td>{{ usu.mail }}</td>
+            <td>{{ usu.admin.nombre }}</td>
             <td>
-                {% if usu.tipo.codigo == 3%}
-                    jefe
-                {% elseif  usu.tipo.codigo == 2%}
-                  empleado
-                {% else %}
-                    cliente
-                {% endif %}
+                {{ usu.tipo.nombre }}
+
             </td>
             <td><a href="{{path('borrar',{'id': usu.id})}}"><button class="btn btn-danger">borrar</button></a>
                 <a href="{{path('update',{'id': usu.id,'nom':'l','mail':'l','adress':'l','phone':0,'tipo':1})}}"><button class="btn btn-warning">editar</button></a></td>
@@ -62,24 +59,31 @@
         <a href="{{path('pagina2')}}"><button class="btn btn-success">Agregar Usuario</button></a>
         <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
         <a href="{{ path('findAdmin')}}"><button class="btn btn-info">Encotrar administrador por tipo</button></a>
-
-
-
 {#        <center><p style='color:red;'>{{ app.request.get('mens.tipo') }}</p></center>#}
         <center><p style='color:blue;'>{{ app.request.get('mensaje') }}</p></center>
-
     <hr>
         <div class="container">
-            {{ form_start(formulari, {'method': 'POST'}) }}
+
             <div class="row">
                 <div class="col-md-6 ">
-                    {{ form_widget(formulari.tipo, { 'attr': {'class': 'form-control','placeholder': 'Filtra tipo','id':'validationCustom03' }}) }}
-                </div>
-                <div class="col-md-6">
+                    {{ form_start(formulari, {'method': 'POST'}) }}
+                    {{ form_label(formulari.tipo) }}
+                    {{ form_widget(formulari.tipo, { 'attr': {'class': 'form-control','id':'validationCustom03' }}) }}
+                    <br>
                     {{ form_widget(formulari.Filtrar, { 'attr': {'class': 'btn btn-primary','id':'validationCustom04' }}) }}
+                    {{ form_end(formulari) }}
                 </div>
+                <div class="col-md-6 ">
+                    {{ form_start(formulari2, {'method': 'POST'}) }}
+                    {{ form_label(formulari2.admin) }}
+                    {{ form_widget(formulari2.admin, { 'attr': {'class': 'form-control','id':'validationCustom03' }}) }}
+                    <br>
+                    {{ form_widget(formulari2.Filtro, { 'attr': {'class': 'btn btn-primary','id':'validationCustom04' }}) }}
+                    {{ form_end(formulari2) }}
+                </div>
+
             </div>
-            {{ form_end(formulari) }}
+
         </div>
 </div>
 {% endblock %}

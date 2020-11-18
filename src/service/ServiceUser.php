@@ -3,9 +3,9 @@
 
 namespace App\service;
 use App\Entity\Administrador;
+use App\Entity\Tipo;
 use App\Entity\Usuario;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class ServiceUser
@@ -53,23 +53,30 @@ class ServiceUser
 
     public function findParameter($tipo){
 
-        $consulta=$this->entityManager->getRepository(Administrador::class)->createQueryBuilder(Administrador::admin)
-            ->where(Administrador::admin.'.tipo=:tipo')->setParameter('tipo',$tipo)->setMaxResults(1)->getQuery()->getSingleResult();
+        $consulta=$this->entityManager->getRepository(Administrador::class)->createQueryBuilder(Administrador::ALIAS)
+            ->where(Administrador::ALIAS.'.tipo=:tipo')->setParameter('tipo',$tipo)->setMaxResults(1)->getQuery()->getSingleResult();
         return $consulta;
 
     }
 
-
+    // TODO: Tiene que devolver los Usuario que tengan asociado un tipo con el código recibido por parámetro
     public function findUsuarioByCodigoTipo($codigo){
-
         $query=$this->entityManager->getRepository(Usuario::class)->createQueryBuilder(Usuario::alias)
-            ->join(Usuario::alias.'.tipo','tp')
-            ->where('tp.codigo=:codigo')
+            ->join(Usuario::alias.'.tipo',Tipo::ALIAS)
+            ->where(Tipo::ALIAS.'.codigo=:codigo')
             ->setParameter('codigo',$codigo)->getquery()->getResult();
         return $query;
 
+    }
 
-        // TODO Tiene que devolver los Usuario que tengan asociado un tipo con el código recibido por parámetro
+    // TODO: Tiene que devolver los Usuario que tengan asociado el administrador
+    public function findUsuarioByAdmin($idAdmin){
+        $query=$this->entityManager->getRepository(Usuario::class)->createQueryBuilder(Usuario::alias)
+            ->join(Usuario::alias.'.admin',Administrador::ALIAS)
+            ->where(Administrador::ALIAS.'.id=:idAdmin')
+            ->setParameter('idAdmin',$idAdmin)->getquery()->getResult();
+        return $query;
+
     }
 
 

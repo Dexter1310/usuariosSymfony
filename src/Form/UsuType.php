@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Administrador;
 use App\Entity\Usuario;
 use App\Entity\Tipo;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -23,6 +24,7 @@ class UsuType extends AbstractType
             ->add('adress')
             ->add('phone')
             ->add('tipo',EntityType::class,['class'=>Tipo::class,'choice_label'=>'nombre'])
+            ->add('admin',EntityType::class,['class'=>Administrador::class,'choice_label'=>'nombre','label'=>'Administrador'])
             ->add('enviar',SubmitType::class)
         ;
 
