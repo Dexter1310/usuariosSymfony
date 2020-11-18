@@ -94,34 +94,59 @@ class Con1Controller extends AbstractController
         /** @var  $number int */
      $number=null;
      $usua=null;
-        $form = $this->createFormBuilder()
-            ->add('tipo',EntityType::class,['class'=>Tipo::class,'choice_label'=>'nombre','label'=>'Mostrar usuarios por tipo:'])
-            ->add('Filtrar',SubmitType::class)->getForm();
+//        $form = $this->createFormBuilder()
+//            ->add('tipo',EntityType::class,['class'=>Tipo::class,'choice_label'=>'nombre','label'=>'Mostrar usuarios por tipo:'])
+//            ->add('Filtrar',SubmitType::class)->getForm();
+//
+//        $form2 = $this->createFormBuilder()
+//            ->add('admin',EntityType::class,['class'=>Administrador::class,'choice_label'=>'nombre','label'=>'Mostrar usuarios asociados al administrador:'])
+//            ->add('Filtro',SubmitType::class)->getForm();
+//
+//        if ($request->getMethod() == 'POST') {
+//            $form->handleRequest($request);
+//            $form2->handleRequest($request);
+//            if ($form->isSubmitted() && $form->isValid()) {
+//                $user = $form->getData();
+//                $number=$user['tipo']->getId();
+//                $usua=$this->entityManager->getRepository(Usuario::class)->findUserType($number);
+//            }
+//            if ($form2->isSubmitted() && $form2->isValid()) {
+//                $user2 = $form2->getData();
+//                $number=$user2['admin']->getId();
+//                $usua=$this->serviceUser->findUsuarioByAdmin($number);
+//            }
+//
+//        }
 
-        $form2 = $this->createFormBuilder()
-            ->add('admin',EntityType::class,['class'=>Administrador::class,'choice_label'=>'nombre','label'=>'Mostrar usuarios asociados al administrador:'])
+
+            $form = $this->createFormBuilder()
+            ->add('tipo',
+                EntityType::class,['class'=>Tipo::class,'placeholder' => 'seleccione un tipo','required'=>false,'choice_label'=>'nombre','label'=>'Mostrar usuarios por tipo:'])
+            ->add('admin',
+                EntityType::class,['class'=>Administrador::class,'placeholder' => 'seleccione un administrador','required'=>false,'choice_label'=>'nombre','label'=>'Mostrar usuarios asociados al administrador:'])
             ->add('Filtro',SubmitType::class)->getForm();
-
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
-            $form2->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $user = $form->getData();
-                $number=$user['tipo']->getId();
-                $usua=$this->entityManager->getRepository(Usuario::class)->findUserType($number);
-            }
-            if ($form2->isSubmitted() && $form2->isValid()) {
-                $user2 = $form2->getData();
-                $user2 = $form2->getData();
-                $number=$user2['admin']->getId();
-                $usua=$this->serviceUser->findUsuarioByAdmin($number);
-            }
+                //Todo:función para comprovar los selecct que han sido filtrados:
+               $usua=$this->serviceUser->filter($user['tipo'],$user['admin']);
 
+
+
+//                if($user['tipo']->getId()!=null){
+//                    $number = $user['tipo']->getId();
+//                    $usua = $this->entityManager->getRepository(Usuario::class)->findUserType($number);
+//                }
+//                if($user['admin']->getId()!=null){
+//                    $number = $user['admin']->getId();
+//                    $usua=$this->serviceUser->findUsuarioByAdmin($number);
+//                }
+            }
         }
 
-
         return $this->render('con1/pagina3.html.twig',['busqueda'=>$usuario,'mensaje'=>'',
-            'usua'=>$usua,'mens'=>$number,'formulari'=>$form->createView(),'formulari2'=>$form2->createView()]);
+            'usua'=>$usua,'mens'=>$number,'formulari'=>$form->createView()]);
     }
 
     /**  Actualizar
