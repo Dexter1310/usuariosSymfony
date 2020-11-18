@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Tipo
 {
+    const ALIAS='tipo';
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

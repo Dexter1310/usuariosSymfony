@@ -21,6 +21,21 @@
     <a href="{{path('pagina3',{'nom':'Bienvenido'})}}"><button class="btn btn-success">LISTADO DE USUARIOS</button></a>
     <a href="{{path('administrador')}}"><button class="btn btn-primary">LISTADO DE ADMINISTRADORES</button></a>
     <a href="{{path('info',{'nombre':'javi','apellidos':'orti'})}}"><button class="btn btn-dark">INFORMACIÓN</button></a>
+    <hr>
+    <a href="{{path('index')}}"><h2>Busqueda por codigo</h2></a><br>
+    {{ form_start(formCode, {'method': 'POST'}) }}
+    {{ form_end(formCode) }}
+
+{#    <p style='color:blue;'>{{ app.request.get('nombre') }}</p>#}
+
+    {% for nom in nombre %}
+    {{ nom.nombre }}
+    {% endfor %}
+
+
+
+
+
 </div>
 
 <hr>

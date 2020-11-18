@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Administrador
 {
+    const ALIAS="admin";
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

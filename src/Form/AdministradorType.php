@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Administrador;
 use App\Entity\Tipo;
+use Doctrine\DBAL\Types\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -32,7 +33,6 @@ class AdministradorType extends AbstractType
             ->add('agregar',SubmitType::class)
         ;
     }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
