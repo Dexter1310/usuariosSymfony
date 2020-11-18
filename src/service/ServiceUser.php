@@ -80,7 +80,7 @@ class ServiceUser
     }
     //Todo: funcion para buscar la condición del formulario que se pide en el FILTRO:
 
-    public function filter($tipo,$administrador){
+    public function filter($tipo = null,$administrador = null){
         $query=$this->entityManager->getRepository(Usuario::class)->createQueryBuilder(Usuario::alias);
         if($tipo){
             $query->andwhere(Usuario::alias.'.tipo=:type')
