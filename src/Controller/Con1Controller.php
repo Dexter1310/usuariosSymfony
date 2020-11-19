@@ -88,7 +88,7 @@ class Con1Controller extends AbstractController
     }
 
     /** visualizar
-     * @Route("/pagina3/", name="pagina3")
+     * @Route("/pagina3/", name="pagina3",methods={"POST","GET"})
      */
     public function pagina3Action(Request $request)
     {
@@ -167,7 +167,8 @@ class Con1Controller extends AbstractController
                 'No User found for id '.$us
             );
         }
-        return $this->redirectToRoute('pagina3',['mensaje'=>'Usuario: '.$usuario->getNombre().'.']);
+        return $this->redirectToRoute('pagina3',['mensaje'=>
+            'Usuario: '.$usuario->getNombre().' - Tipo: '.$usuario->getTipo()->getNombre().' - Administrador : '.$usuario->getAdmin()->getNombre()]);
     }
     /**
      * @Route("/findAdmin", name="findAdmin",methods={"POST","GET"})

@@ -9,6 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Administrador
 {
+    const Principal=1;
+    const Admin=2;
+    const of1=3;
+    const of2=4;
     const ALIAS="admin";
     /**
      * @ORM\Id()
@@ -26,6 +30,12 @@ class Administrador
      * @ORM\Column(type="integer")
      */
     private $tipo;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $categoria;
+
 
     public function getId(): ?int
     {
@@ -55,4 +65,21 @@ class Administrador
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
+
+    /**
+     * @param mixed $categoria
+     */
+    public function setCategoria($categoria): void
+    {
+        $this->categoria = $categoria;
+    }
+
 }

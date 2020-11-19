@@ -84,7 +84,6 @@ class AdministradorController extends AbstractController
      */
     public function updateAdmin(Administrador $admin,Request $request)
     {
-
         $formAdmin = $this->createForm(AdministradorType::class, $admin);
         if ($request->getMethod() == 'POST') {
             $formAdmin->handleRequest($request);
