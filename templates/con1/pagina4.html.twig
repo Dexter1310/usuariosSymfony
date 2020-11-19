@@ -42,6 +42,10 @@
                     {{ form_label(formul.tipo) }}
                     {{ form_widget(formul.tipo, { 'attr': {'class': 'form-control','id':'validationCustom05' }}) }}
                 </div>
+                <div class="col-md-3 mb-3">
+                    {{ form_label(formul.admin) }}
+                    {{ form_widget(formul.admin, { 'attr': {'class': 'form-control','id':'validationCustom05' }}) }}
+                </div>
             </div>
             {{ form_widget(formul.enviar, { 'attr': {'class': 'btn btn-primary','id':'validationCustom05' }}) }}
             {{ form_end(formul) }}
