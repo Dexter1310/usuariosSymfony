@@ -25,3 +25,22 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    app.query_filter.order.converter:
+        class: 'DigitalAscetic\QueryFilterBundle\Service\OrderByParameterConverter'
+        arguments: [ 'order', 'orderBy' ]
+
+    DigitalAscetic\QueryFilterBundle\Service\OrderByParameterConverter: '@app.query_filter.order.converter'
+
+    app.query_filter.converter:
+        class: 'DigitalAscetic\QueryFilterBundle\Service\DefaultQueryFilterConverter'
+        arguments: [ '@app.query_filter.param.converter', 'filter' ]
+        public: true
+
+    DigitalAscetic\QueryFilterBundle\Service\DefaultQueryFilterConverter: '@app.query_filter.converter'
+
+    app.query_filter.param.converter:
+        class: 'DigitalAscetic\QueryFilterBundle\Service\DelegateParameterConverter'
+        arguments: [ [ '@app.query_filter.order.converter' ] ]
+
+    DigitalAscetic\QueryFilterBundle\Service\DelegateParameterConverter: '@app.query_filter.param.converter'

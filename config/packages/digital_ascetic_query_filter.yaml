@@ -1,0 +1,4 @@
+digital_ascetic_query_filter:
+  enabled: true
+  enable_paged_results_subscriber: false
+  default_converter: 'app.query_filter.converter'
