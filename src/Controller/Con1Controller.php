@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Administrador;
 use App\Entity\Tipo;
 use App\Form\AdministradorType;
+use App\Form\FilterType;
 use App\Repository\UsuarioRepository;
 use App\service\NewMessage;
 use App\Entity\Usuario;
@@ -45,6 +46,7 @@ class Con1Controller extends AbstractController
         $this->entityManager = $entityManager;
         $this->serviceUser = $serviceUser;
     }
+
     /**
      * @Route("/", name="index")
      */
@@ -84,68 +86,30 @@ class Con1Controller extends AbstractController
             ]
         );
     }
+
     /** visualizar
      * @Route("/pagina3/", name="pagina3")
      */
-
     public function pagina3Action(Request $request)
     {
         $usuario=$this->serviceUser->findUser();
         /** @var  $number int */
      $number=null;
      $usua=null;
-//        $form = $this->createFormBuilder()
-//            ->add('tipo',EntityType::class,['class'=>Tipo::class,'choice_label'=>'nombre','label'=>'Mostrar usuarios por tipo:'])
-//            ->add('Filtrar',SubmitType::class)->getForm();
-//
-//        $form2 = $this->createFormBuilder()
-//            ->add('admin',EntityType::class,['class'=>Administrador::class,'choice_label'=>'nombre','label'=>'Mostrar usuarios asociados al administrador:'])
-//            ->add('Filtro',SubmitType::class)->getForm();
-//
-//        if ($request->getMethod() == 'POST') {
-//            $form->handleRequest($request);
-//            $form2->handleRequest($request);
-//            if ($form->isSubmitted() && $form->isValid()) {
-//                $user = $form->getData();
-//                $number=$user['tipo']->getId();
-//                $usua=$this->entityManager->getRepository(Usuario::class)->findUserType($number);
-//            }
-//            if ($form2->isSubmitted() && $form2->isValid()) {
-//                $user2 = $form2->getData();
-//                $number=$user2['admin']->getId();
-//                $usua=$this->serviceUser->findUsuarioByAdmin($number);
-//            }
-//
-//        }
-
-
-            $form = $this->createFormBuilder()
-            ->add('tipo',
-                EntityType::class,['class'=>Tipo::class,'placeholder' => 'seleccione un tipo','required'=>false,'choice_label'=>'nombre','label'=>'Mostrar usuarios por tipo:'])
-            ->add('admin',
-                EntityType::class,['class'=>Administrador::class,'placeholder' => 'seleccione un administrador','required'=>false,'choice_label'=>'nombre','label'=>'Mostrar usuarios asociados al administrador:'])
-            ->add('Filtro',SubmitType::class)->getForm();
+     $found=null;
+        $form=$this->createForm(FilterType::class);
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $user = $form->getData();
-                //Todo:función para comprovar los selecct que han sido filtrados:
-               $usua=$this->serviceUser->filter($user['tipo'],$user['admin']);
-
-
-
-//                if($user['tipo']->getId()!=null){
-//                    $number = $user['tipo']->getId();
-//                    $usua = $this->entityManager->getRepository(Usuario::class)->findUserType($number);
-//                }
-//                if($user['admin']->getId()!=null){
-//                    $number = $user['admin']->getId();
-//                    $usua=$this->serviceUser->findUsuarioByAdmin($number);
-//                }
+                /** @var FilterType $filter */
+                $filter = $form->getData();
+                //Todo:función para comprobar los select que han sido filtrados:
+               $usua=$this->serviceUser->filter($filter['tipo'],$filter['admin']);
+                $found='Usuarios encontrados: '.count($usua);
             }
         }
 
-        return $this->render('con1/pagina3.html.twig',['busqueda'=>$usuario,'mensaje'=>'',
+        return $this->render('con1/pagina3.html.twig',['busqueda'=>$usuario,'mensaje'=>$found,
             'usua'=>$usua,'mens'=>$number,'formulari'=>$form->createView()]);
     }
 
@@ -204,7 +168,6 @@ class Con1Controller extends AbstractController
             );
         }
         return $this->redirectToRoute('pagina3',['mensaje'=>'Usuario: '.$usuario->getNombre().'.']);
-
     }
     /**
      * @Route("/findAdmin", name="findAdmin",methods={"POST","GET"})
@@ -223,6 +186,5 @@ class Con1Controller extends AbstractController
             }
         return $this->render("con1/findAdmin.html.twig",['formAdmin'=>$formAdmin->createView()]);
     }
-
 
 }

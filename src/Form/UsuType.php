@@ -27,13 +27,11 @@ class UsuType extends AbstractType
             ->add('admin',EntityType::class,['class'=>Administrador::class,'choice_label'=>'nombre','label'=>'Administrador'])
             ->add('enviar',SubmitType::class)
         ;
-
     }
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Usuario::class,
-
         ]);
     }
 }

@@ -4,7 +4,7 @@
 {% block title %}{{ parent() }}pagina-2{% endblock %}
 {% block body %}
     <div class="container">
-        <h1> {{ mensaje }}</h1>
+        <h2 style="color: #5eb5e0"> <hr>{{ mensaje }}</h2>
 
             {% for mess in app.flashes('success') %}
             <div class="alert alert-success">{{ mess }}</div>
@@ -65,25 +65,7 @@
         <div class="container">
             {{ form_start(formulari, {'method': 'POST'}) }}
             <div class="row">
-{#                <div class="col-md-6 ">#}
-{#                    {{ form_start(formulari, {'method': 'POST'}) }}#}
-{#                    {{ form_label(formulari.tipo) }}#}
-{#                    {{ form_widget(formulari.tipo, { 'attr': {'class': 'form-control','id':'validationCustom03' }}) }}#}
-{#                    <br>#}
-{#                    {{ form_widget(formulari.Filtrar, { 'attr': {'class': 'btn btn-primary','id':'validationCustom04' }}) }}#}
-{#                    {{ form_end(formulari) }}#}
-{#                </div>#}
-{#                <div class="col-md-6 ">#}
-{#                    {{ form_start(formulari2, {'method': 'POST'}) }}#}
-{#                    {{ form_label(formulari2.admin) }}#}
-{#                    {{ form_widget(formulari2.admin, { 'attr': {'class': 'form-control','id':'validationCustom03' }}) }}#}
-{#                    <br>#}
-{#                    {{ form_widget(formulari2.Filtro, { 'attr': {'class': 'btn btn-primary','id':'validationCustom04' }}) }}#}
-{#                    {{ form_end(formulari2) }}#}
-{#                </div>#}
-
                 <div class="col-md-6 ">
-
                     {{ form_label(formulari.tipo) }}
                     {{ form_widget(formulari.tipo, { 'attr': {'class': 'form-control','id':'validationCustom03' }}) }}
                 <br>
@@ -92,10 +74,7 @@
                 <div class="col-md-6 ">
                     {{ form_label(formulari.admin) }}
                     {{ form_widget(formulari.admin, { 'attr': {'class': 'form-control','id':'validationCustom03' }}) }}
-
-
                 </div>
-
             </div>
             {{ form_end(formulari) }}
         </div>
