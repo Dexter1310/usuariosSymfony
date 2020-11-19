@@ -104,7 +104,7 @@ class Con1Controller extends AbstractController
                 /** @var FilterType $filter */
                 $filter = $form->getData();
                 //Todo:función para comprobar los select que han sido filtrados:
-               $usua=$this->serviceUser->filter($filter['tipo'],$filter['admin']);
+               $usua=$this->serviceUser->filter($filter['tipo'],$filter['admin'],$filter['codigo']);
                 $found='Usuarios encontrados: '.count($usua);
             }
         }
