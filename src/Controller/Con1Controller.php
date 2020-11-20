@@ -16,6 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +25,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Yaml\Tests\A;
 
 class Con1Controller extends AbstractController
 {
@@ -38,14 +38,20 @@ class Con1Controller extends AbstractController
     private $userQueryFilter;
 
     /**
+     * @var ContainerInterface $container
+     */
+    protected $container;
+
+    /**
      * Con1Controller constructor.
      * @param $men
      * @param $entityManager
      * @param $serviceUser
      * @param $userQueryFilter
      */
-    public function __construct(NewMessage $men, EntityManagerInterface $entityManager, ServiceUser $serviceUser,UserQueryFilter $userQueryFilter)
+    public function __construct(ContainerInterface  $container, NewMessage $men, EntityManagerInterface $entityManager, ServiceUser $serviceUser,UserQueryFilter $userQueryFilter)
     {
+        $this->container = $container;
         $this->men = $men;
         $this->entityManager = $entityManager;
         $this->serviceUser = $serviceUser;
