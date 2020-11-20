@@ -5,7 +5,6 @@
 {% block body %}
     <div class="container">
         <h2 style="color: #5eb5e0"> <hr>{{ mensaje }}</h2>
-
             {% for mess in app.flashes('success') %}
             <div class="alert alert-success">{{ mess }}</div>
         {% endfor %}
@@ -20,7 +19,6 @@
     <h2 class="pull center">Listado de usuarios
         <a href="{{path('pagina2')}}"><button class="btn btn-success">Agregar Usuario</button></a>
         <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
-
     </h2>
     <table id="list" class="table table-striped">
     <thead>
@@ -36,12 +34,11 @@
     </tr>
     </thead>
     <tbody>
-
     {% for usu in busqueda %}
         <tr data-href="{{path('user_show',{'id':usu.id})}}" >
             <th scope="row">{{ usu.id }}</th>
             <td>{{ usu.nombre }}</td>
-            <td>{{ usu.adress }}</td>
+            <td><small>{{ usu.adress }}</small></td>
             <td>{{ usu.phone }}</td>
             <td>{{ usu.mail }}</td>
             <td>{{ usu.admin.nombre }} - <scan style="color:green">Cat.{{ usu.admin.categoria }}</scan></td>
@@ -58,7 +55,7 @@
         <a href="{{path('administrador')}}"><button class="btn btn-primary"> Administradores</button></a>
         <a href="{{path('pagina2')}}"><button class="btn btn-success">Agregar Usuario</button></a>
         <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
-        <a href="{{ path('findAdmin')}}"><button class="btn btn-info">Encotrar administrador por tipo</button></a>
+        <a href="{{ path('findAdmin')}}"><button class="btn btn-info">Encontrar administrador por tipo</button></a>
 {#        <center><p style='color:red;'>{{ app.request.get('mens.tipo') }}</p></center>#}
         <hr>
         <div class="container" style="text-align: center"><p style='color:blue;'>{{ app.request.get('mensaje') }}</p></div>
@@ -78,7 +75,6 @@
                     {{ form_label(formulari.admin) }}
                     {{ form_widget(formulari.admin, { 'attr': {'class': 'form-control','id':'validationCustom03' }}) }}
                 </div>
-
         </div>
             <br>
             <div class="container">{{ form_widget(formulari.Filtro, { 'attr': {'class': 'btn btn-primary','id':'validationCustom04' }}) }}</div>
@@ -92,7 +88,6 @@
     $(document).ready( function () {
         $('#list').DataTable();
         $('#listAdmin').DataTable();
-
         $('tr[data-href]').on("click", function() {
             document.location = $(this).data('href');
         });

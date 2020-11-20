@@ -66,7 +66,6 @@ class ServiceUser
         $consulta=$this->entityManager->getRepository(Administrador::class)->createQueryBuilder(Administrador::ALIAS)
             ->where(Administrador::ALIAS.'.tipo=:tipo')->setParameter('tipo',$tipo)->setMaxResults(1)->getQuery()->getSingleResult();
         return $consulta;
-
     }
 
     // TODO: Tiene que devolver los Usuario que tengan asociado un tipo con el código recibido por parámetro
@@ -76,7 +75,6 @@ class ServiceUser
             ->where(Tipo::ALIAS.'.codigo=:codigo')
             ->setParameter('codigo',$codigo)->getquery()->getResult();
         return $query;
-
     }
 
     // TODO: Tiene que devolver los Usuario que tengan asociado el administrador
@@ -86,12 +84,10 @@ class ServiceUser
             ->where(Administrador::ALIAS.'.id=:idAdmin')
             ->setParameter('idAdmin',$idAdmin)->getquery()->getResult();
         return $query;
-
     }
     //Todo: funcion para buscar la condición del formulario que se pide en el FILTRO:
 
     public function filter($tipo = null,$administrador = null, $codigo = null){
-
         $query=$this->entityManager->getRepository(Usuario::class)->createQueryBuilder(Usuario::alias);
         if($tipo){
             $query->andwhere(Usuario::alias.'.tipo=:type')
@@ -111,13 +107,5 @@ class ServiceUser
                 ->setParameter('codigo',$codigo)->getquery()->getResult();
         }
           return $query->getquery()->getResult();
-
-
     }
-
-
-
-
-
-
 }

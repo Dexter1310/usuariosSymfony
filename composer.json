@@ -6,7 +6,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "digitalascetic/query-filter": "^4.0",
-        "doctrine/doctrine-cache-bundle": "^1.4",
         "sensio/framework-extra-bundle": "^5.0.0",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "^4.3.0",
