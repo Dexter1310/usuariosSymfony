@@ -34,13 +34,11 @@ class Con1Controller extends AbstractController
     private $entityManager;
     /** @var ServiceUser $serviceUser */
     private $serviceUser;
-    /** @var UserQueryFilter $userQueryFilter */
-    private $userQueryFilter;
 
     /**
      * @var ContainerInterface $container
      */
-    protected $container;
+    protected $containerSymfony;
 
     /**
      * Con1Controller constructor.
@@ -49,9 +47,9 @@ class Con1Controller extends AbstractController
      * @param $serviceUser
      * @param $userQueryFilter
      */
-    public function __construct(ContainerInterface  $container, NewMessage $men, EntityManagerInterface $entityManager, ServiceUser $serviceUser,UserQueryFilter $userQueryFilter)
+    public function __construct(ContainerInterface $container, NewMessage $men, EntityManagerInterface $entityManager, ServiceUser $serviceUser,UserQueryFilter $userQueryFilter)
     {
-        $this->container = $container;
+        $this->containerSymfony = $container;
         $this->men = $men;
         $this->entityManager = $entityManager;
         $this->serviceUser = $serviceUser;
@@ -117,7 +115,7 @@ class Con1Controller extends AbstractController
                 //Todo:función para comprobar los select que han sido filtrados:
 
 //               $usua=$this->serviceUser->filter($filter['tipo'],$filter['admin'],$filter['codigo']);
-                $newQF=new UserQueryFilter($this->container);
+                $newQF=new UserQueryFilter($this->containerSymfony);
                 $newQF->setAdministrador($filter['admin']);
                 $newQF->setTipo($filter['tipo']);
                 $newQF->setCodigo($filter['codigo']);
