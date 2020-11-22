@@ -82,4 +82,12 @@ class Tipo
     {
         $this->Usuario = $Usuario;
     }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
 }

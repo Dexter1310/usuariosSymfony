@@ -111,16 +111,14 @@ class Con1Controller extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 /** @var FilterType $filter */
                 $filter = $form->getData();
-
                 //Todo:función para comprobar los select que han sido filtrados:
-
 //               $usua=$this->serviceUser->filter($filter['tipo'],$filter['admin'],$filter['codigo']);
                 $newQF=new UserQueryFilter($this->containerSymfony);
+
                 $newQF->setAdministrador($filter['admin']);
                 $newQF->setTipo($filter['tipo']);
                 $newQF->setCodigo($filter['codigo']);
                 $usua=$newQF->getResults();
-
                 $found='Usuarios encontrados: '.count($usua);
             }
         }
@@ -128,6 +126,11 @@ class Con1Controller extends AbstractController
         return $this->render('con1/pagina3.html.twig',['busqueda'=>$usuario,'mensaje'=>$found,
             'usua'=>$usua,'mens'=>$number,'formulari'=>$form->createView()]);
     }
+
+
+
+
+
 
     /**  Actualizar
      * @Route("/pagina4/{id}", requirements={"id" = "^\d+$"}, name="update", methods={"POST","GET"})

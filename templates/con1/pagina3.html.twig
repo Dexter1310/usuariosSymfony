@@ -47,7 +47,8 @@
 
             </td>
             <td><a href="{{path('borrar',{'id': usu.id})}}"><button class="btn btn-danger">borrar</button></a>
-                <a href="{{path('update',{'id': usu.id,'nom':'l','mail':'l','adress':'l','phone':0,'tipo':1})}}"><button class="btn btn-warning">editar</button></a></td>
+                <a href="{{path('update',{'id': usu.id,'nom':'l','mail':'l','adress':'l','phone':0,'tipo':1})}}"><button class="btn btn-warning">editar</button></a>
+               </td>
         </tr>
     {% endfor %}
     </tbody>
@@ -56,6 +57,7 @@
         <a href="{{path('pagina2')}}"><button class="btn btn-success">Agregar Usuario</button></a>
         <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
         <a href="{{ path('findAdmin')}}"><button class="btn btn-info">Encontrar administrador por tipo</button></a>
+        <button  id="peti" class="btn btn-danger">Petición</button>
 {#        <center><p style='color:red;'>{{ app.request.get('mens.tipo') }}</p></center>#}
         <hr>
         <div class="container" style="text-align: center"><p style='color:blue;'>{{ app.request.get('mensaje') }}</p></div>
@@ -65,22 +67,28 @@
             <div class="row">
                 <div class="col-md-4 ">
                     {{ form_label(formulari.tipo) }}
-                    {{ form_widget(formulari.tipo, { 'attr': {'class': 'form-control','id':'validationCustom03' }}) }}
+                    {{ form_widget(formulari.tipo, { 'attr': {'class': 'form-control','id':'tipo' }}) }}
                      </div>
                      <div class="col-md-4 ">
                     {{ form_label(formulari.codigo) }}
-                    {{ form_widget(formulari.codigo, { 'attr': {'class': 'form-control','id':'validationCustom03' }}) }}
+                    {{ form_widget(formulari.codigo, { 'attr': {'class': 'form-control','id':'codigo' }}) }}
                      </div>
                 <div class="col-md-4 ">
                     {{ form_label(formulari.admin) }}
-                    {{ form_widget(formulari.admin, { 'attr': {'class': 'form-control','id':'validationCustom03' }}) }}
+                    {{ form_widget(formulari.admin, { 'attr': {'class': 'form-control','id':'admin' }}) }}
                 </div>
         </div>
             <br>
-            <div class="container">{{ form_widget(formulari.Filtro, { 'attr': {'class': 'btn btn-primary','id':'validationCustom04' }}) }}</div>
+            <div class="container">
+                {{ form_widget(formulari.Filtro, { 'attr': {'class': 'btn btn-primary','id':'validationCustom04' }}) }}
 
+                <hr>
+            </div>
             {{ form_end(formulari) }}
         </div>
+
+        <div id="result"></div>
+
 </div>
 {% endblock %}
 {% block javascripts %}{{ parent() }}
@@ -91,6 +99,24 @@
         $('tr[data-href]').on("click", function() {
             document.location = $(this).data('href');
         });
+        $('#peti').click(function(){
+            var tipo=$('#filter_tipo').val();
+            var codigo=$('#filter_codigo').val();
+            var admin=$('#filter_admin').val();
+            datos = {"filter_tipo":tipo, "filter_codigo":codigo,"filter_admin":admin};
+            $.ajax({
+                method: "POST",
+                url: "/peticion",
+                data: datos,
+                success: function (data) {
+                    $('#result').html(datos['filter_tipo']+" - "+datos['filter_codigo']+" - "+datos['filter_admin']);
+                }
+            })
+                .done(function(result) {
+                    alert( "Petición correcta: "+datos['filter_tipo']+" - "+datos['filter_codigo']+" - "+datos['filter_admin']);
+
+                });
+        })
     } );
 </script>
 {% endblock %}

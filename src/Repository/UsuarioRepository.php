@@ -31,7 +31,9 @@ class UsuarioRepository extends ServiceEntityRepository
 //            ->getResult();
         //Todo: ejemplo de createQueryBuilder()
         $consulta=$this->getEntityManager()->getRepository(Usuario::class)->createQueryBuilder(Usuario::alias);
-        return $consulta->where(Usuario::alias.'.tipo=:type')->setParameter('type',$tipo)->getQuery()->execute();
+        return $consulta
+            ->where(Usuario::alias.'.tipo=:type')
+            ->setParameter('type',$tipo)->getQuery()->execute();
 
     }
 

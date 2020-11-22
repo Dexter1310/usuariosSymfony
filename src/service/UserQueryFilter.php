@@ -42,7 +42,7 @@ class UserQueryFilter extends AbstractDoctrineQueryFilter
 
         if (!is_null($this->tipo)) {
             $this->qb->andwhere($aliasUsuario.'.tipo=:type')
-                ->setParameter('type', $this->tipo);
+                ->setParameter('type', $this->tipo->getId());
         }
         if (!is_null($this->administrador)) {
             $this->qb->join($aliasUsuario.'.admin',Administrador::ALIAS)
@@ -50,9 +50,8 @@ class UserQueryFilter extends AbstractDoctrineQueryFilter
                 ->setParameter('idAdmin', $this->administrador->getId());
         }
         if (!is_null($this->codigo)) {
-            $this->qb->join($aliasUsuario.'.admin',Administrador::ALIAS)
-                ->join($aliasUsuario.'.tipo',Tipo::ALIAS)
-                ->where(Tipo::ALIAS.'.codigo=:codigo')
+            $this->qb->join(Usuario::alias.'.tipo',Tipo::ALIAS)
+                ->andwhere(Tipo::ALIAS.'.codigo=:codigo')
                 ->setParameter('codigo', $this->codigo);
         }
     }
