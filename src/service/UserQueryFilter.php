@@ -1,5 +1,6 @@
 <?php
 namespace App\service;
+
 use App\Entity\Administrador;
 use App\Entity\Tipo;
 use App\Entity\Usuario;
