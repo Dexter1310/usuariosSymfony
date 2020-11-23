@@ -7,17 +7,17 @@ use App\Entity\Tipo;
 use App\Form\FilterType;
 use App\service\ServiceUser;
 use App\service\UserQueryFilter;
+use DigitalAscetic\BaseEntityBundle\Controller\BaseWebServiceController;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
-class FileController extends AbstractController
+class FileController extends BaseWebServiceController
 {
     private $containerSymfony;
     private $serviceUser;
@@ -46,6 +46,11 @@ class FileController extends AbstractController
      */
     public function list(UserQueryFilter $filter)
     {
+        /**
+         * Reemplazar todo este codigo por $this->>jsonResponse() incluido en BaseWebServiceController
+         */
+
+
         $serializationContext = SerializationContext::create();
         $results = $filter->getResults();
         $json = $this->serializer->serialize(

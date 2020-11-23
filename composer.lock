@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "df078bd87aa45adab206889086f9079a",
+    "content-hash": "dbbfa265f40e820d07c648c01b88abf2",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
