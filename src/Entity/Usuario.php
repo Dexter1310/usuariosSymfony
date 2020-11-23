@@ -14,8 +14,7 @@ class Usuario extends BaseEntity
     const alias ="alias";
     const VIEW_DEFAULT = "default";
     const VIEW_COMPLETE = "complete";
-    const VIEW_LIST="nombre_tipo";
-
+    const VIEW_LIST_TIPO_NOMBRE="nombre_tipo";
 
 
     public static function getSerializationGroups(string $view)
@@ -32,7 +31,7 @@ class Usuario extends BaseEntity
                     "default",
                     "complete",
                 ];
-            case self::VIEW_LIST:
+            case self::VIEW_LIST_TIPO_NOMBRE:
                 return [
                     "id",
                     "nombre_tipo",

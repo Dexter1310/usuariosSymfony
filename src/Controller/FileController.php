@@ -54,7 +54,7 @@ class FileController extends BaseWebServiceController
 //            $serializationContext->setGroups(['default'])->setSerializeNull(true)
 //        );
 //        $filter->setStart(0);$filter->setCount(10);
-        return   $this->jsonResponse($filter->getResults(), Usuario::VIEW_LIST);
+        return   $this->jsonResponse($filter->getResults(), Usuario::VIEW_LIST_TIPO_NOMBRE);
 //
 //        return new JsonResponse($json, 200, [], true);
     }

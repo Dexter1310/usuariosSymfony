@@ -29,6 +29,7 @@ class Tipo
     /**
      * @ORM\Column(type="integer")
      * @Serializer\Groups({"default"})
+     * @Serializer\Groups({"default_tipo"})
 
      */
     private $codigo;
