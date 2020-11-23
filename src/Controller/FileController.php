@@ -32,7 +32,7 @@ class FileController extends AbstractController
 
     /**
      * @Route("/peticion", name="peticion",methods={"POST"})
-     * @ParamConverter("filter", class="App\service\UserQueryFilter")
+     * @ParamConverter("filter", class="App\service\UserQueryFilter", options={"alwaysCreate", "params"={"@service_container"}})
      * @param UserQueryFilter|null $filter
      */
     public function list(?UserQueryFilter $filter,Request $request)
