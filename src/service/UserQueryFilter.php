@@ -14,15 +14,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class UserQueryFilter extends AbstractDoctrineQueryFilter
 {
     /**
-     * @var Tipo|null
+     * @var int|null
      */
     private $tipo;
     /**
-     * @var Administrador|null
+     * @var int|null
      */
     private $administrador;
     /**
-     * @var Tipo|null
+     * @var int|null
      */
     private $codigo;
 
@@ -43,12 +43,12 @@ class UserQueryFilter extends AbstractDoctrineQueryFilter
 
         if (!is_null($this->tipo)) {
             $this->qb->andwhere($aliasUsuario.'.tipo=:type')
-                ->setParameter('type', $this->tipo->getId());
+                ->setParameter('type', $this->tipo);
         }
         if (!is_null($this->administrador)) {
             $this->qb->join($aliasUsuario.'.admin',Administrador::ALIAS)
                 ->andwhere(Administrador::ALIAS.'.id=:idAdmin')
-                ->setParameter('idAdmin', $this->administrador->getId());
+                ->setParameter('idAdmin', $this->administrador);
         }
         if (!is_null($this->codigo)) {
             $this->qb->join(Usuario::alias.'.tipo',Tipo::ALIAS)
@@ -67,53 +67,52 @@ class UserQueryFilter extends AbstractDoctrineQueryFilter
     }
 
     /**
-     * @return Tipo|null
+     * @return int|null
      */
-    public function getTipo(): ?Tipo
+    public function getTipo(): ?int
     {
         return $this->tipo;
     }
 
     /**
-     * @param Tipo|null $tipo
+     * @param int|null $tipo
      */
-    public function setTipo(?Tipo $tipo): void
+    public function setTipo(?int $tipo): void
     {
         $this->tipo = $tipo;
     }
 
     /**
-     * @return Administrador|null
+     * @return int|null
      */
-    public function getAdministrador(): ?Administrador
+    public function getAdministrador(): ?int
     {
         return $this->administrador;
     }
 
     /**
-     * @param Administrador|null $administrador
+     * @param int|null $administrador
      */
-    public function setAdministrador(?Administrador $administrador): void
+    public function setAdministrador(?int $administrador): void
     {
         $this->administrador = $administrador;
     }
 
     /**
-     * @return Tipo|null
+     * @return int|null
      */
-    public function getCodigo(): ?Tipo
+    public function getCodigo(): ?int
     {
         return $this->codigo;
     }
 
     /**
-     * @param Tipo|null $codigo
+     * @param int|null $codigo
      */
-    public function setCodigo(?Tipo $codigo): void
+    public function setCodigo(?int $codigo): void
     {
         $this->codigo = $codigo;
     }
-
 
 
 
