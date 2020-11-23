@@ -1,83 +1,103 @@
-
 {% extends 'base.html.twig' %}
 {% block stylesheets %}{{ parent() }}{% endblock %}
 {% block title %}{{ parent() }}pagina-2{% endblock %}
 {% block body %}
     <div class="container">
-        <h2 style="color: #5eb5e0"> <hr>{{ mensaje }}</h2>
-            {% for mess in app.flashes('success') %}
+        <h2 style="color: #5eb5e0">
+            <hr>{{ mensaje }}</h2>
+        {% for mess in app.flashes('success') %}
             <div class="alert alert-success">{{ mess }}</div>
         {% endfor %}
         <hr>
         <scan style="color: #005cbf">
             <ul>
-        {% for usuar in usua %}
-            <li>{{ usuar.nombre}}    - usuario tipo : {{mens}} - {{ usuar.tipo.nombre }}</li>
-        {% endfor %}
+                {% for usuar in usua %}
+                    <li>{{ usuar.nombre }} - usuario tipo : {{ mens }} - {{ usuar.tipo.nombre }}</li>
+                {% endfor %}
             </ul>
-    </scan>
-    <h2 class="pull center">Listado de usuarios
-        <a href="{{path('pagina2')}}"><button class="btn btn-success">Agregar Usuario</button></a>
-        <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
-    </h2>
-    <table id="list" class="table table-striped">
-    <thead>
-    <tr>
-        <th scope="col">id</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Dirección</th>
-        <th scope="col">Teléfono</th>
-        <th scope="col">mail</th>
-        <th scope="col">Administrador Asociado</th>
-        <th scope="col">Tipo</th>
-        <th scope="col">Opciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for usu in busqueda %}
-        <tr data-href="{{path('user_show',{'id':usu.id})}}" >
-            <th scope="row">{{ usu.id }}</th>
-            <td>{{ usu.nombre }}</td>
-            <td><small>{{ usu.adress }}</small></td>
-            <td>{{ usu.phone }}</td>
-            <td>{{ usu.mail }}</td>
-            <td>{{ usu.admin.nombre }} - <scan style="color:green">Cat.{{ usu.admin.categoria }}</scan></td>
-            <td>
-                {{ usu.tipo.nombre }} - <scan style="color:green">Cd.{{ usu.tipo.codigo }}</scan>
+        </scan>
+        <h2 class="pull center">Listado de usuarios
+            <a href="{{ path('pagina2') }}">
+                <button class="btn btn-success">Agregar Usuario</button>
+            </a>
+            <a href="{{ path('index') }}">
+                <button class="btn btn-dark">Inicio</button>
+            </a>
+        </h2>
+        <table id="list" class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">mail</th>
+                <th scope="col">Administrador Asociado</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Opciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for usu in busqueda %}
+                <tr data-href="{{ path('user_show',{'id':usu.id}) }}">
+                    <th scope="row">{{ usu.id }}</th>
+                    <td>{{ usu.nombre }}</td>
+                    <td><small>{{ usu.adress }}</small></td>
+                    <td>{{ usu.phone }}</td>
+                    <td>{{ usu.mail }}</td>
+                    <td>{{ usu.admin.nombre }} -
+                        <scan style="color:green">Cat.{{ usu.admin.categoria }}</scan>
+                    </td>
+                    <td>
+                        {{ usu.tipo.nombre }} -
+                        <scan style="color:green">Cd.{{ usu.tipo.codigo }}</scan>
 
-            </td>
-            <td><a href="{{path('borrar',{'id': usu.id})}}"><button class="btn btn-danger">borrar</button></a>
-                <a href="{{path('update',{'id': usu.id,'nom':'l','mail':'l','adress':'l','phone':0,'tipo':1})}}"><button class="btn btn-warning">editar</button></a>
-               </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-    </table>
-        <a href="{{path('administrador')}}"><button class="btn btn-primary"> Administradores</button></a>
-        <a href="{{path('pagina2')}}"><button class="btn btn-success">Agregar Usuario</button></a>
-        <a href="{{path('index')}}"><button class="btn btn-dark">Inicio</button></a>
-        <a href="{{ path('findAdmin')}}"><button class="btn btn-info">Encontrar administrador por tipo</button></a>
-        <button  id="peti" class="btn btn-danger">Petición</button>
-{#        <center><p style='color:red;'>{{ app.request.get('mens.tipo') }}</p></center>#}
+                    </td>
+                    <td><a href="{{ path('borrar',{'id': usu.id}) }}">
+                            <button class="btn btn-danger">borrar</button>
+                        </a>
+                        <a href="{{ path('update',{'id': usu.id,'nom':'l','mail':'l','adress':'l','phone':0,'tipo':1}) }}">
+                            <button class="btn btn-warning">editar</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('administrador') }}">
+            <button class="btn btn-primary"> Administradores</button>
+        </a>
+        <a href="{{ path('pagina2') }}">
+            <button class="btn btn-success">Agregar Usuario</button>
+        </a>
+        <a href="{{ path('index') }}">
+            <button class="btn btn-dark">Inicio</button>
+        </a>
+        <a href="{{ path('findAdmin') }}">
+            <button class="btn btn-info">Encontrar administrador por tipo</button>
+        </a>
+        <button id="peti" class="btn btn-danger">Petición</button>
+        {# <center><p style='color:red;'>{{ app.request.get('mens.tipo') }}</p></center> #}
         <hr>
-        <div class="container" style="text-align: center"><p style='color:blue;'>{{ app.request.get('mensaje') }}</p></div>
-    <hr>
+        <div class="container" style="text-align: center"><p style='color:blue;'>{{ app.request.get('mensaje') }}</p>
+        </div>
+        <hr>
         <div class="container">
             {{ form_start(formulari, {'method': 'POST'}) }}
             <div class="row">
                 <div class="col-md-4 ">
                     {{ form_label(formulari.tipo) }}
                     {{ form_widget(formulari.tipo, { 'attr': {'class': 'form-control','id':'tipo' }}) }}
-                     </div>
-                     <div class="col-md-4 ">
+                </div>
+                <div class="col-md-4 ">
                     {{ form_label(formulari.codigo) }}
                     {{ form_widget(formulari.codigo, { 'attr': {'class': 'form-control','id':'codigo' }}) }}
-                     </div>
+                </div>
                 <div class="col-md-4 ">
                     {{ form_label(formulari.admin) }}
                     {{ form_widget(formulari.admin, { 'attr': {'class': 'form-control','id':'admin' }}) }}
                 </div>
-        </div>
+            </div>
             <br>
             <div class="container">
                 {{ form_widget(formulari.Filtro, { 'attr': {'class': 'btn btn-primary','id':'validationCustom04' }}) }}
@@ -89,34 +109,37 @@
 
         <div id="result"></div>
 
-</div>
+    </div>
 {% endblock %}
 {% block javascripts %}{{ parent() }}
-<script>
-    $(document).ready( function () {
-        $('#list').DataTable();
-        $('#listAdmin').DataTable();
-        $('tr[data-href]').on("click", function() {
-            document.location = $(this).data('href');
-        });
-        $('#peti').click(function(){
-            var tipo=$('#filter_tipo').val();
-            var codigo=$('#filter_codigo').val();
-            var admin=$('#filter_admin').val();
-            datos = {"filter[tipo]":tipo, "filter[codigo]":codigo,"filter[admin]":admin};
-            $.ajax({
-                method: "GET",
-                url: "/peticion",
-                data: datos,
-                success: function (data) {
-                    $('#result').html(datos['filter_tipo']+" - "+datos['filter_codigo']+" - "+datos['filter_admin']);
-                }
-            })
-                .done(function(result) {
-                    alert( "Petición correcta: "+datos['filter_tipo']+" - "+datos['filter_codigo']+" - "+datos['filter_admin']);
+    <script>
+        $(document).ready(function () {
+            $('#list').DataTable();
+            $('#listAdmin').DataTable();
+            $('tr[data-href]').on("click", function () {
+                document.location = $(this).data('href');
+            });
+            $('#peti').click(function () {
+                var tipo = $('#filter_tipo').val();
+                var codigo = $('#filter_codigo').val();
+                var admin = $('#filter_admin').val();
+                datos = {"filter[tipo]": tipo, "filter[codigo]": codigo, "filter[admin]": admin};
+                $.ajax({
+                    method: "GET",
+                    url: "/peticion",
+                    data: datos,
+                })
+                    .done(function (result) {
 
-                });
-        })
-    } );
-</script>
+                        $('tbody').empty();
+                        var usuarios = result.data;
+
+                        for (var i = 0; i < usuarios.length; i++) {
+                            $('tbody').append('<tr><td>'+usuarios[i].id+'</td><td>'+usuarios[i].tipo.nombre+'</td></tr>');
+                        }
+
+                    });
+            })
+        });
+    </script>
 {% endblock %}
