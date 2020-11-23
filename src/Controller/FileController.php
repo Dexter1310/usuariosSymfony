@@ -22,9 +22,6 @@ class FileController extends BaseWebServiceController
     private $containerSymfony;
     private $serviceUser;
 
-    /** @var SerializerInterface */
-    private $serializer;
-
     /**
      * FileController constructor.
      * @param $containerSymfony
@@ -32,12 +29,10 @@ class FileController extends BaseWebServiceController
      */
     public function __construct(
         ContainerInterface $containerSymfony,
-        ServiceUser $serviceUser,
-        SerializerInterface $serializer
+        ServiceUser $serviceUser
     ) {
         $this->containerSymfony = $containerSymfony;
         $this->serviceUser = $serviceUser;
-        $this->serializer = $serializer;
     }
 
     /**
