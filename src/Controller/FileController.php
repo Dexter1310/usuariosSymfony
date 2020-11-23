@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Administrador;
 use App\Entity\Tipo;
+use App\Entity\Usuario;
 use App\Form\FilterType;
 use App\service\ServiceUser;
 use App\service\UserQueryFilter;
@@ -52,8 +53,8 @@ class FileController extends BaseWebServiceController
 //            'json',
 //            $serializationContext->setGroups(['default'])->setSerializeNull(true)
 //        );
-        $filter->setStart(0);$filter->setCount(10);
-        return   $this->jsonResponse($filter->getResults());
+//        $filter->setStart(0);$filter->setCount(10);
+        return   $this->jsonResponse($filter->getResults(), Usuario::VIEW_LIST);
 //
 //        return new JsonResponse($json, 200, [], true);
     }

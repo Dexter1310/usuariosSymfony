@@ -2,35 +2,56 @@
 
 namespace App\Entity;
 
+use DigitalAscetic\BaseEntityBundle\Entity\BaseEntity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UsuarioRepository")
  */
-class Usuario
+class Usuario extends BaseEntity
 {
     const alias ="alias";
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     * @Serializer\Type("int")
-     * @Serializer\Groups({"default"})
-     */
-    private $id;
+    const VIEW_DEFAULT = "default";
+    const VIEW_COMPLETE = "complete";
+    const VIEW_LIST="nombre_tipo";
 
+
+
+    public static function getSerializationGroups(string $view)
+    {
+        switch ($view) {
+            case self::VIEW_DEFAULT:
+                return [
+                    "id",
+                    "default",
+                ];
+            case self::VIEW_COMPLETE:
+                return [
+                    "id",
+                    "default",
+                    "complete",
+                ];
+            case self::VIEW_LIST:
+                return [
+                    "id",
+                    "nombre_tipo",
+                    "default_tipo",
+                ];
+        }
+    }
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Serializer\Type("string")
      * @Serializer\Groups({"default"})
+     * @Serializer\Groups({"nombre_tipo"})
      */
     private $nombre;
-
     /**
      * @ORM\Column(type="string", length=500, nullable=true)
      * @Serializer\Type("string")
      * @Serializer\Groups({"default"})
+
      */
     private $mail;
 
@@ -54,6 +75,7 @@ class Usuario
      * @ORM\ManyToOne(targetEntity="App\Entity\Tipo", inversedBy="Usuario",cascade={"persist"})
      * @Serializer\Type("App\Entity\Tipo")
      * @Serializer\Groups({"default"})
+     * @Serializer\Groups({"nombre_tipo"})
      */
     private $tipo;
 
@@ -61,6 +83,7 @@ class Usuario
      * @ORM\ManyToOne(targetEntity="App\Entity\Administrador", inversedBy="Usuario",cascade={"persist"})
      * @Serializer\Type("App\Entity\Administrador")
      * @Serializer\Groups({"default"})
+
      */
     private $admin;
 
@@ -81,10 +104,6 @@ class Usuario
     }
 
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getNombre(): ?string
     {
