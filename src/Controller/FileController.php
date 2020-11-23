@@ -7,6 +7,7 @@ use App\Entity\Tipo;
 use App\Form\FilterType;
 use App\service\ServiceUser;
 use App\service\UserQueryFilter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -31,12 +32,16 @@ class FileController extends AbstractController
     }
 
     /**
-     * @Route("/peticion", name="peticion",methods={"POST"})
+     * @Route("/peticion", name="peticion",methods={"GET", "OPTIONS})
      * @ParamConverter("filter", class="App\service\UserQueryFilter", options={"alwaysCreate", "params"={"@service_container"}})
      * @param UserQueryFilter|null $filter
      */
-    public function list(?UserQueryFilter $filter,Request $request)
+    public function list(?UserQueryFilter $filter)
     {
+        return new JsonResponse(
+            ['data' => $filter->getResults()]
+        );
+
         $usuario=$this->serviceUser->findUser();
         $form=$this->createForm(FilterType::class);
         $tipo=$request->request->get('filter_tipo');

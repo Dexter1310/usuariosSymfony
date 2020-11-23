@@ -103,9 +103,9 @@
             var tipo=$('#filter_tipo').val();
             var codigo=$('#filter_codigo').val();
             var admin=$('#filter_admin').val();
-            datos = {"filter_tipo":tipo, "filter_codigo":codigo,"filter_admin":admin};
+            datos = {"filter[tipo]":tipo, "filter[codigo]":codigo,"filter[admin]":admin};
             $.ajax({
-                method: "POST",
+                method: "GET",
                 url: "/peticion",
                 data: datos,
                 success: function (data) {
