@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
-class fileController extends AbstractController
+class FileController extends AbstractController
 {
     private $containerSymfony;
     private $serviceUser;
