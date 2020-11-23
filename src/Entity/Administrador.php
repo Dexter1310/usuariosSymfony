@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdministradorRepository")
@@ -18,21 +19,25 @@ class Administrador
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Serializer\Groups({"default"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups({"default"})
      */
     private $nombre;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups({"default"})
      */
     private $tipo;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups({"default"})
      */
     private $categoria;
 

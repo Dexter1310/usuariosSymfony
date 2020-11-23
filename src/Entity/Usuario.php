@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UsuarioRepository")
@@ -14,36 +15,52 @@ class Usuario
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Serializer\Type("int")
+     * @Serializer\Groups({"default"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Serializer\Type("string")
+     * @Serializer\Groups({"default"})
      */
     private $nombre;
 
     /**
      * @ORM\Column(type="string", length=500, nullable=true)
+     * @Serializer\Type("string")
+     * @Serializer\Groups({"default"})
      */
     private $mail;
 
     /**
      * @ORM\Column(type="string", length=500)
+     * @Serializer\Type("string")
+     * @Serializer\Groups({"default"})
      */
     private $adress;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Serializer\Type("int")
+     * @Serializer\Groups({"default"})
      */
     private $phone;
 
 
     /**
+     * @var Tipo
      * @ORM\ManyToOne(targetEntity="App\Entity\Tipo", inversedBy="Usuario",cascade={"persist"})
+     * @Serializer\Type("App\Entity\Tipo")
+     * @Serializer\Groups({"default"})
      */
     private $tipo;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Administrador", inversedBy="Usuario",cascade={"persist"})
+     * @Serializer\Type("App\Entity\Administrador")
+     * @Serializer\Groups({"default"})
      */
     private $admin;
 
@@ -118,17 +135,17 @@ class Usuario
     }
 
     /**
-     * @return mixed
+     * @return Tipo
      */
-    public function getTipo()
+    public function getTipo(): Tipo
     {
         return $this->tipo;
     }
 
     /**
-     * @param mixed $tipo
+     * @param Tipo $tipo
      */
-    public function setTipo($tipo): void
+    public function setTipo(Tipo $tipo): void
     {
         $this->tipo = $tipo;
     }

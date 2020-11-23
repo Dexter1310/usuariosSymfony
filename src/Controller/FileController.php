@@ -7,6 +7,8 @@ use App\Entity\Tipo;
 use App\Form\FilterType;
 use App\service\ServiceUser;
 use App\service\UserQueryFilter;
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,15 +22,22 @@ class FileController extends AbstractController
     private $containerSymfony;
     private $serviceUser;
 
+    /** @var SerializerInterface */
+    private $serializer;
+
     /**
      * FileController constructor.
      * @param $containerSymfony
      * @param $serviceUser
      */
-    public function __construct(ContainerInterface $containerSymfony, ServiceUser $serviceUser)
-    {
+    public function __construct(
+        ContainerInterface $containerSymfony,
+        ServiceUser $serviceUser,
+        SerializerInterface $serializer
+    ) {
         $this->containerSymfony = $containerSymfony;
         $this->serviceUser = $serviceUser;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -37,8 +46,14 @@ class FileController extends AbstractController
      */
     public function list(UserQueryFilter $filter)
     {
-        return new JsonResponse(
-            ['data' => $filter->getResults()]
+        $serializationContext = SerializationContext::create();
+        $results = $filter->getResults();
+        $json = $this->serializer->serialize(
+            ['data' => $results],
+            'json',
+            $serializationContext->setGroups(['default'])->setSerializeNull(true)
         );
+
+        return new JsonResponse($json, 200, [], true);
     }
 }
