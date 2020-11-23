@@ -53,7 +53,7 @@
                         <scan style="color:green">Cd.{{ usu.tipo.codigo }}</scan>
 
                     </td>
-                    <td><a href="{{ path('borrar',{'id': usu.id}) }}">
+                    <td ><a href="{{ path('borrar',{'id': usu.id}) }}">
                             <button class="btn btn-danger">borrar</button>
                         </a>
                         <a href="{{ path('update',{'id': usu.id,'nom':'l','mail':'l','adress':'l','phone':0,'tipo':1}) }}">
@@ -130,14 +130,23 @@
                     data: datos,
                 })
                     .done(function (result) {
-
                         $('tbody').empty();
                         var usuarios = result.data;
-
                         for (var i = 0; i < usuarios.length; i++) {
-                            $('tbody').append('<tr><td>'+usuarios[i].id+'</td><td>'+usuarios[i].tipo.nombre+'</td></tr>');
+                            console.log(usuarios[i])
+                            $('tbody').append("<tr>" +
+                                '<td>'+usuarios[i].id+'</td>' +
+                                '<td>'+usuarios[i].nombre+'</td>' +
+                                '<td>'+usuarios[i].adress+'</td>' +
+                                '<td>'+usuarios[i].phone+'</td>' +
+                                '<td>'+usuarios[i].mail+'</td>' +
+                                '<td>'+usuarios[i].admin.nombre+' - Cat.'+usuarios[i].admin.categoria+'</td>' +
+                                '<td>'+usuarios[i].tipo.nombre+' - Cod.'+usuarios[i].tipo.codigo+'</td>' +
+                                "<td>"+"<a href='/pagina3/"+usuarios[i].id+"'><button class='btn btn-danger'>Borrar</button></a>"+"" +
+                                "<a href='/pagina4/"+usuarios[i].id+"'><button class='btn btn-warning'>Editar</button></a>" +
+                                "</td>"+
+                                '</tr>');
                         }
-
                     });
             })
         });
