@@ -57,8 +57,10 @@ class UserQueryFilter extends AbstractDoctrineQueryFilter
         return array_merge(
             $parentJoins,
             [
-                ['inner', $this->getBaseClassAlias().'.admin', Administrador::ALIAS],
-                ['inner', $this->getBaseClassAlias().'.tipo', Tipo::ALIAS],
+                ['type' => 'inner', 'prop' =>  $this->getBaseClassAlias().'.admin', 'alias' => Administrador::ALIAS],
+                ['type' => 'inner', 'prop' =>  $this->getBaseClassAlias().'.tipo', 'alias' => Tipo::ALIAS]
+//                ['inner', $this->getBaseClassAlias().'.admin', Administrador::ALIAS],
+//                ['inner', $this->getBaseClassAlias().'.tipo', Tipo::ALIAS]
             ]
         );
     }

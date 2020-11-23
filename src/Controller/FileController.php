@@ -44,16 +44,17 @@ class FileController extends BaseWebServiceController
         /**
          * Reemplazar todo este codigo por $this->>jsonResponse() incluido en BaseWebServiceController
          */
-
-
-        $serializationContext = SerializationContext::create();
-        $results = $filter->getResults();
-        $json = $this->serializer->serialize(
-            ['data' => $results],
-            'json',
-            $serializationContext->setGroups(['default'])->setSerializeNull(true)
-        );
-
-        return new JsonResponse($json, 200, [], true);
+//
+//        $serializationContext = SerializationContext::create();
+//        $results = $filter->getResults();
+//        $json = $this->serializer->serialize(
+//            ['data' => $results],
+//            'json',
+//            $serializationContext->setGroups(['default'])->setSerializeNull(true)
+//        );
+        $filter->setStart(0);$filter->setCount(10);
+        return   $this->jsonResponse($filter->getPagedResults());
+//
+//        return new JsonResponse($json, 200, [], true);
     }
 }

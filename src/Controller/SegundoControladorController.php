@@ -7,7 +7,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SegundoControladorController extends AbstractController
 {
-
     /**
      * @Route("/info/{nombre}/{apellidos}/", name="info")
      */
