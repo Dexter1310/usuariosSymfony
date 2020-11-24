@@ -16,21 +16,19 @@ class Tipo
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Serializer\Groups({"default_tipo"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Serializer\Groups({"default"})
-     * @Serializer\Groups({"default_tipo"})
+     * @Serializer\Groups({"default_tipo","nombre_tipo"})
      */
     private $nombre;
 
     /**
      * @ORM\Column(type="integer")
-     * @Serializer\Groups({"default"})
-     * @Serializer\Groups({"default_tipo"})
-
+     * @Serializer\Groups({"default_tipo","nombre_codigo"})
      */
     private $codigo;
 

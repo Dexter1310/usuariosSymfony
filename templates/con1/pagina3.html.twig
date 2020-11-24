@@ -101,14 +101,11 @@
             <br>
             <div class="container">
                 {{ form_widget(formulari.Filtro, { 'attr': {'class': 'btn btn-primary','id':'validationCustom04' }}) }}
-
                 <hr>
             </div>
             {{ form_end(formulari) }}
         </div>
-
         <div id="result"></div>
-
     </div>
 {% endblock %}
 {% block javascripts %}{{ parent() }}
@@ -132,6 +129,7 @@
                     .done(function (result) {
                         $('tbody').empty();
                         var usuarios = result.data;
+                        console.log(result.data)
                         for (var i = 0; i < usuarios.length; i++) {
                             console.log(usuarios[i])
                             $('tbody').append("<tr>" +

@@ -94,7 +94,6 @@ class Con1Controller extends AbstractController
             ]
         );
     }
-
     /** visualizar
      * @Route("/pagina3/", name="pagina3",methods={"POST","GET"})
      */
@@ -122,15 +121,9 @@ class Con1Controller extends AbstractController
                 $found='Usuarios encontrados: '.count($usua);
             }
         }
-
         return $this->render('con1/pagina3.html.twig',['busqueda'=>$usuario,'mensaje'=>$found,
             'usua'=>$usua,'mens'=>$number,'formulari'=>$form->createView()]);
     }
-
-
-
-
-
 
     /**  Actualizar
      * @Route("/pagina4/{id}", requirements={"id" = "^\d+$"}, name="update", methods={"POST","GET"})

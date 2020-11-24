@@ -17,13 +17,17 @@ class Usuario extends BaseEntity
     const VIEW_LIST_TIPO_NOMBRE="nombre_tipo";
 
 
+
     public static function getSerializationGroups(string $view)
     {
         switch ($view) {
             case self::VIEW_DEFAULT:
                 return [
                     "id",
-                    "default",
+                    "default_usu",
+                    "nombre_usu",
+                    "default_tipo",
+                    "default_admin",
                 ];
             case self::VIEW_COMPLETE:
                 return [
@@ -34,22 +38,23 @@ class Usuario extends BaseEntity
             case self::VIEW_LIST_TIPO_NOMBRE:
                 return [
                     "id",
-                    "nombre_tipo",
-                    "default_tipo",
+                    "nombre_usu",//fitra solo nombre de usuario
+                    "nombre_tipo",//filtra por el nombre del tipo
+                    "nombre_codigo",//filtra por el código
                 ];
         }
     }
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Serializer\Type("string")
-     * @Serializer\Groups({"default"})
-     * @Serializer\Groups({"nombre_tipo"})
+     * @Serializer\Groups({"default_usu"})
+     * @Serializer\Groups({"nombre_usu"})
      */
     private $nombre;
     /**
      * @ORM\Column(type="string", length=500, nullable=true)
      * @Serializer\Type("string")
-     * @Serializer\Groups({"default"})
+     * @Serializer\Groups({"default_usu"})
 
      */
     private $mail;
@@ -57,14 +62,14 @@ class Usuario extends BaseEntity
     /**
      * @ORM\Column(type="string", length=500)
      * @Serializer\Type("string")
-     * @Serializer\Groups({"default"})
+     * @Serializer\Groups({"default_usu"})
      */
     private $adress;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Serializer\Type("int")
-     * @Serializer\Groups({"default"})
+     * @Serializer\Groups({"default_usu"})
      */
     private $phone;
 
@@ -73,15 +78,15 @@ class Usuario extends BaseEntity
      * @var Tipo
      * @ORM\ManyToOne(targetEntity="App\Entity\Tipo", inversedBy="Usuario",cascade={"persist"})
      * @Serializer\Type("App\Entity\Tipo")
-     * @Serializer\Groups({"default"})
-     * @Serializer\Groups({"nombre_tipo"})
+     * @Serializer\Groups({"default_usu","nombre_tipo","nombre_codigo"})
+
      */
     private $tipo;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Administrador", inversedBy="Usuario",cascade={"persist"})
      * @Serializer\Type("App\Entity\Administrador")
-     * @Serializer\Groups({"default"})
+     * @Serializer\Groups({"default_usu"})
 
      */
     private $admin;

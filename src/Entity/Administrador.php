@@ -19,25 +19,25 @@ class Administrador
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Serializer\Groups({"default"})
+     * @Serializer\Groups({"default_admin"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Serializer\Groups({"default"})
+     * @Serializer\Groups({"default_admin"})
      */
     private $nombre;
 
     /**
      * @ORM\Column(type="integer")
-     * @Serializer\Groups({"default"})
+     * @Serializer\Groups({"default_admin"})
      */
     private $tipo;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Serializer\Groups({"default"})
+     * @Serializer\Groups({"default_admin"})
      */
     private $categoria;
 
