@@ -21,12 +21,16 @@ class Usuario extends BaseEntity
     {
         switch ($view) {
             case self::VIEW_DEFAULT:
-                return [
+                $result = array(
                     "id",
                     "default_usu",
-                    "default_tipo",
-                    "default_admin",
-                ];
+                );
+
+                return array_merge(
+                    $result,
+                    Tipo::getSerializationGroups(Tipo::VIEW_DEFAULT),
+                    Administrador::getSerializationGroups(Administrador::VIEW_DEFAULT)
+                );
             case self::VIEW_COMPLETE:
                 return [
                     "id",
