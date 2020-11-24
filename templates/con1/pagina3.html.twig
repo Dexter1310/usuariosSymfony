@@ -121,7 +121,7 @@
                 var codigo = $('#filter_codigo').val();
                 var admin = $('#filter_admin').val();
                 console.log(tipo)
-                datos = {"filter[tipo]": tipo, "filter[codigo]": codigo, "filter[admin]": admin};
+                datos = {"filter[tipo]": tipo, "filter[codigo]": codigo, "filter[administrador]": admin,"filter[start]":1,"filter[count]":2};
                 $.ajax({
                     method: "GET",
                     url: "/peticion",
@@ -129,10 +129,9 @@
                 })
                     .done(function (result) {
                         $('tbody').empty();
-                        var usuarios = result.data;
-                        console.log(result.data)
+                        var usuarios = result['pager']['results'];
+                        console.log(result)
                         for (var i = 0; i < usuarios.length; i++) {
-                            console.log(usuarios[i])
                             $('tbody').append("<tr>" +
                                 '<td>'+usuarios[i].id+'</td>' +
                                 '<td>'+usuarios[i].nombre+'</td>' +

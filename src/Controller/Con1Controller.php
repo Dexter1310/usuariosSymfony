@@ -122,7 +122,6 @@ class Con1Controller extends AbstractController
                     $newQF->setCodigo($filter['codigo']->getId());
                 }
 
-//                $newQF->setCodigo($filter['codigo']->getId());
                 $usua=$newQF->getResults();
                 $found='Usuarios encontrados: '.count($usua);
             }
