@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DigitalAscetic\BaseEntityBundle\Entity\BaseEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
@@ -9,33 +10,36 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TipoRepository")
  */
-class Tipo
+class Tipo extends BaseEntity
 {
     const ALIAS='tipo';
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     * @Serializer\Groups({"default_tipo"})
-     */
-    private $id;
+    const VIEW_DEFAULT="default";
+    public static function getSerializationGroups(string $view)
+    {
+        switch ($view) {
+            case self::VIEW_DEFAULT:
+                return [
+                    "id",
+                    "default_tipo",
+                ];
+        }
+    }
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Serializer\Groups({"default_tipo","nombre_tipo"})
+     * @Serializer\Groups({"default_tipo"})
      */
     private $nombre;
 
     /**
      * @ORM\Column(type="integer")
-     * @Serializer\Groups({"default_tipo","nombre_codigo"})
+     * @Serializer\Groups({"default_tipo"})
      */
     private $codigo;
 
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Usuario", mappedBy="Tipo")
-     * @Serializer\Groups({"complete"})
      */
     private $Usuario;
 
@@ -52,11 +56,6 @@ class Tipo
         $this->Usuario = new ArrayCollection();
     }
 
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getNombre(): ?string
     {
@@ -88,11 +87,4 @@ class Tipo
         $this->Usuario = $Usuario;
     }
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
 }

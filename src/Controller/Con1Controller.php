@@ -114,9 +114,9 @@ class Con1Controller extends AbstractController
 //               $usua=$this->serviceUser->filter($filter['tipo'],$filter['admin'],$filter['codigo']);
                 $newQF=new UserQueryFilter($this->containerSymfony);
 
-                $newQF->setAdministrador($filter['admin']);
+                $newQF->setAdministrador($filter['admin']->getId());
                 $newQF->setTipo($filter['tipo']->getId());
-                $newQF->setCodigo($filter['codigo']);
+                $newQF->setCodigo($filter['codigo']->getId());
                 $usua=$newQF->getResults();
                 $found='Usuarios encontrados: '.count($usua);
             }

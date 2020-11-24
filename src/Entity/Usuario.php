@@ -17,7 +17,6 @@ class Usuario extends BaseEntity
     const VIEW_LIST_TIPO_NOMBRE="nombre_tipo";
 
 
-
     public static function getSerializationGroups(string $view)
     {
         switch ($view) {
@@ -25,7 +24,6 @@ class Usuario extends BaseEntity
                 return [
                     "id",
                     "default_usu",
-                    "nombre_usu",
                     "default_tipo",
                     "default_admin",
                 ];
@@ -47,8 +45,7 @@ class Usuario extends BaseEntity
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Serializer\Type("string")
-     * @Serializer\Groups({"default_usu"})
-     * @Serializer\Groups({"nombre_usu"})
+     * @Serializer\Groups({"default_usu"git })
      */
     private $nombre;
     /**
@@ -78,7 +75,7 @@ class Usuario extends BaseEntity
      * @var Tipo
      * @ORM\ManyToOne(targetEntity="App\Entity\Tipo", inversedBy="Usuario",cascade={"persist"})
      * @Serializer\Type("App\Entity\Tipo")
-     * @Serializer\Groups({"default_usu","nombre_tipo","nombre_codigo"})
+     * @Serializer\Groups({"default_usu"})
 
      */
     private $tipo;

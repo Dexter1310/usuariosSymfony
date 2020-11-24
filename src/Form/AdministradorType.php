@@ -20,8 +20,8 @@ class AdministradorType extends AbstractType
         $builder
             ->add('nombre')
             ->add('tipo',ChoiceType::class, [
-                'choices' => ['Administradores' => ['principal' => Administrador::Principal, 'admin' => Administrador::Admin,],
-                    'Empleados' => ['of1' => Administrador::of1, 'of2' => Administrador::of2,],],])
+                'choices' => ['Administradores' => ['principal' => Administrador::PRINCIPAL, 'admin' => Administrador::ADMIN,],
+                    'Empleados' => ['of1' => Administrador::OF1, 'of2' => Administrador::OF2,],],])
             ->add('categoria',HiddenType::class)
             ->add('agregar',SubmitType::class)
         ;

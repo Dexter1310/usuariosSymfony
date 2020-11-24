@@ -2,26 +2,32 @@
 
 namespace App\Entity;
 
+use DigitalAscetic\BaseEntityBundle\Entity\BaseEntity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdministradorRepository")
  */
-class Administrador
+class Administrador extends BaseEntity
 {
-    const Principal=1;
-    const Admin=2;
-    const of1=3;
-    const of2=4;
+    const PRINCIPAL=1;
+    const ADMIN=2;
+    const OF1=3;
+    const OF2=4;
     const ALIAS="admin";
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     * @Serializer\Groups({"default_admin"})
-     */
-    private $id;
+    const VIEW_DEFAULT="default";
+
+    public static function getSerializationGroups(string $view)
+    {
+        switch ($view) {
+            case self::VIEW_DEFAULT:
+                return [
+                    "id",
+                    "default_admin",
+                ];
+        }
+    }
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -42,11 +48,6 @@ class Administrador
     private $categoria;
 
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getNombre(): ?string
     {
         return $this->nombre;
@@ -55,7 +56,6 @@ class Administrador
     public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
-
         return $this;
     }
 
@@ -67,7 +67,6 @@ class Administrador
     public function setTipo(int $tipo): self
     {
         $this->tipo = $tipo;
-
         return $this;
     }
 
