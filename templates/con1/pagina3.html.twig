@@ -120,6 +120,7 @@
                 var tipo = $('#filter_tipo').val();
                 var codigo = $('#filter_codigo').val();
                 var admin = $('#filter_admin').val();
+                console.log(tipo)
                 datos = {"filter[tipo]": tipo, "filter[codigo]": codigo, "filter[admin]": admin};
                 $.ajax({
                     method: "GET",

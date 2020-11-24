@@ -49,7 +49,7 @@ class Usuario extends BaseEntity
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Serializer\Type("string")
-     * @Serializer\Groups({"default_usu"git })
+     * @Serializer\Groups({"default_usu"})
      */
     private $nombre;
     /**

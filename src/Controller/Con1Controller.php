@@ -111,12 +111,18 @@ class Con1Controller extends AbstractController
                 /** @var FilterType $filter */
                 $filter = $form->getData();
                 //Todo:función para comprobar los select que han sido filtrados:
-//               $usua=$this->serviceUser->filter($filter['tipo'],$filter['admin'],$filter['codigo']);
                 $newQF=new UserQueryFilter($this->containerSymfony);
+                if($filter['admin']){
+                    $newQF->setAdministrador($filter['admin']->getId());
+                }
+                if($filter['tipo']){
+                    $newQF->setTipo($filter['tipo']->getId());
+                }
+                if($filter['codigo']){
+                    $newQF->setCodigo($filter['codigo']->getId());
+                }
 
-                $newQF->setAdministrador($filter['admin']->getId());
-                $newQF->setTipo($filter['tipo']->getId());
-                $newQF->setCodigo($filter['codigo']->getId());
+//                $newQF->setCodigo($filter['codigo']->getId());
                 $usua=$newQF->getResults();
                 $found='Usuarios encontrados: '.count($usua);
             }
