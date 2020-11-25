@@ -26,6 +26,7 @@ $(document).ready(function () {
                 "url": "/peticion",
                 "type": "GET",
                 'data': function (d) {
+
                     // AQUI PODEMOS MANIPULAR LOS PARAMETROS QUE PASAMOS EN EL GET, EN ESTE CASO PASAMOS EL FILTER
                     return {
                         "filter[tipo]": $('#filter_tipo').val(),
@@ -50,10 +51,18 @@ $(document).ready(function () {
                 {"data": "adress"},
                 {"data": "phone"},
                 {"data": "mail"},
-                {"data": "admin.nombre"},
-                {"data": "tipo.nombre"},
+                {    data: 'admin',
+                    render: function ( data, type, row ) {
+                        return "<small>"+data.nombre +"<scan style='color:green'> - Cat."+ data.categoria+"</scan></small>";
+                    }},
+                {data: 'tipo',
+                    render: function ( data, type, row ) {
+                        return "<small>"+data.nombre +" <scan style='color: green'>- Cod."+ data.codigo+"</scan></small>";
+                    }},
                 {
                     "render": function (data, type, row) {
+
+                        console.log(type)
                         var html = '';
                         html = "<a href='/pagina3/" + row.id + "'><button class='btn btn-danger'>Borrar</button></a>" + "" +
                             "<a href='/pagina4/" + row.id + "'><button class='btn btn-warning'>Editar</button></a>";
@@ -63,6 +72,9 @@ $(document).ready(function () {
             ]
         },
     );
+    $('#peti').click(function (){
+            table.ajax.reload();
+    })
 
 
     $('#listAdmin').DataTable();
