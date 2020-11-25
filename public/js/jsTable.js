@@ -21,36 +21,30 @@ $(document).ready(function () {
                     "previous": "Anterior"
                 }
             },
-            "aLengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todo"]],
-            "iDisplayLength": 5,
             "serverSide": true,
             "ajax": {
                 "url": "/peticion",
                 "type": "GET",
                 'data': function (d) {
-                    var tipo = $('#filter_tipo').val();
-                    var codigo = $('#filter_codigo').val();
-                    var admin = $('#filter_admin').val();
-                    var datos = {
-                        "filter[tipo]": tipo,
-                        "filter[codigo]": codigo,
-                        "filter[administrador]": admin,
+                    // AQUI PODEMOS MANIPULAR LOS PARAMETROS QUE PASAMOS EN EL GET, EN ESTE CASO PASAMOS EL FILTER
+                    return {
+                        "filter[tipo]": $('#filter_tipo').val(),
+                        "filter[codigo]": $('#filter_codigo').val(),
+                        "filter[administrador]": $('#filter_admin').val(),
                         "filter[start]": d.start,
                         "filter[count]": d.length
                     };
-                    console.log(datos);
-                    return datos;
                 }
             },
             "info": true,
             "paging": true,
             "processing": true,
             "displayStart": 0,
-            "lengthMenu": [10, 25, 50, 100], // las opciones count que quieras poner
+            "lengthMenu": [2, 3, 4, 5], // las opciones count que quieras poner
             "pageLength": 2,
             "pagingType": "full_numbers",
             "rowId": "id",
-            "columns":[
+            "columns": [
                 {"data": "id"},
                 {"data": "nombre"},
                 {"data": "adress"},
@@ -61,8 +55,8 @@ $(document).ready(function () {
                 {
                     "render": function (data, type, row) {
                         var html = '';
-                        html = "<a href='/pagina3/"+row.id+"'><button class='btn btn-danger'>Borrar</button></a>"+"" +
-                        "<a href='/pagina4/"+row.id+"'><button class='btn btn-warning'>Editar</button></a>";
+                        html = "<a href='/pagina3/" + row.id + "'><button class='btn btn-danger'>Borrar</button></a>" + "" +
+                            "<a href='/pagina4/" + row.id + "'><button class='btn btn-warning'>Editar</button></a>";
                         return html;
                     }
                 }
