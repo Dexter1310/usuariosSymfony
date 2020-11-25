@@ -38,30 +38,6 @@
             </tr>
             </thead>
             <tbody>
-            {% for usu in busqueda %}
-                <tr data-href="{{ path('user_show',{'id':usu.id}) }}">
-                    <th scope="row">{{ usu.id }}</th>
-                    <td>{{ usu.nombre }}</td>
-                    <td><small>{{ usu.adress }}</small></td>
-                    <td>{{ usu.phone }}</td>
-                    <td>{{ usu.mail }}</td>
-                    <td>{{ usu.admin.nombre }} -
-                        <scan style="color:green">Cat.{{ usu.admin.categoria }}</scan>
-                    </td>
-                    <td>
-                        {{ usu.tipo.nombre }} -
-                        <scan style="color:green">Cd.{{ usu.tipo.codigo }}</scan>
-
-                    </td>
-                    <td ><a href="{{ path('borrar',{'id': usu.id}) }}">
-                            <button class="btn btn-danger">borrar</button>
-                        </a>
-                        <a href="{{ path('update',{'id': usu.id,'nom':'l','mail':'l','adress':'l','phone':0,'tipo':1}) }}">
-                            <button class="btn btn-warning">editar</button>
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
             </tbody>
         </table>
         <a href="{{ path('administrador') }}">
@@ -117,47 +93,6 @@
                 document.location = $(this).data('href');
             });
             var count=$('select[name=list_length]').val();
-
-         $('#peti,#list_paginate ').click(function () {
-                var tipo = $('#filter_tipo').val();
-                var codigo = $('#filter_codigo').val();
-                var admin = $('#filter_admin').val();
-                var page=$('.dataTables_info').html();
-                var pageStart=page-1;
-                var table = $('#list').DataTable();
-                var info = table.page.info();
-                console.log("start: "+info.start + " start 'metodo javi'"+pageStart );
-
-                datos = {"filter[tipo]": tipo, "filter[codigo]": codigo, "filter[administrador]": admin,"filter[start]":info.start,"filter[count]":count};
-                $.ajax({
-                    method: "GET",
-                    url: "/peticion",
-                    data: datos,
-                })
-                    .done(function (result) {
-                        $('tbody').empty();
-                        var usuarios = result['pager']['results'];
-                        console.log(result)
-                        for (var i = 0; i < usuarios.length; i++) {
-                            $('tbody').append("<tr>" +
-                                '<td>'+usuarios[i].id+'</td>' +
-                                '<td>'+usuarios[i].nombre+'</td>' +
-                                // '<td>'+usuarios[i].adress+'</td>' +
-                                // '<td>'+usuarios[i].phone+'</td>' +
-                                // '<td>'+usuarios[i].mail+'</td>' +
-                                // '<td>'+usuarios[i].admin.nombre+' - Cat.'+usuarios[i].admin.categoria+'</td>' +
-                                '<td></td>' +
-                                '<td></td>' +
-                                '<td></td>' +
-                                '<td></td>' +
-                                '<td>'+usuarios[i].tipo.nombre+' - Cod.'+usuarios[i].tipo.codigo+'</td>' +
-                                "<td>"+"<a href='/pagina3/"+usuarios[i].id+"'><button class='btn btn-danger'>Borrar</button></a>"+"" +
-                                "<a href='/pagina4/"+usuarios[i].id+"'><button class='btn btn-warning'>Editar</button></a>" +
-                                "</td>"+
-                                '</tr>');
-                        }
-                    });
-            })
         });
     </script>
 {% endblock %}

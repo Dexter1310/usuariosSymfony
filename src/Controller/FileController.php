@@ -14,6 +14,7 @@ use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -40,27 +41,27 @@ class FileController extends BaseWebServiceController
      * @Route("/peticion", name="peticion", methods={"GET", "OPTIONS"})
      * @ParamConverter("filter", class="App\service\UserQueryFilter", options={"alwaysCreate", "params"={"@service_container"}})
      */
-    public function list(UserQueryFilter $filter)
+    public function list(UserQueryFilter $filter, Request  $request)
     {
-        /**
-         * Reemplazar todo este codigo por $this->>jsonResponse() incluido en BaseWebServiceController
-         */
-//
-//        $serializationContext = SerializationContext::create();
-//        $results = $filter->getResults();
-//        $json = $this->serializer->serialize(
-//            ['data' => $results],
-//            'json',
-//            $serializationContext->setGroups(['default'])->setSerializeNull(true)
-//        );
-//
-//        return new JsonResponse($json, 200, [], true);
+        $paged = $filter->getPagedResults();
 
-//        Todo:método de getResult():
-//        return   $this->jsonResponse($filter->getResults(), Usuario::VIEW_DEFAULT);
-//        Todo:método de getPagedResult():
+        $response = [
+            'recordsTotal' => $paged->getTotalItems(),
+            'recordsFiltered' => $paged->getTotalItems(),
+            'data' => $filter->getResults(),
+        ];
 
-        return   $this->jsonResponse($filter->getPagedResults(),Usuario::VIEW_DEFAULT);
+        $jsonContent = $this->serializer->serialize(
+            $response,
+            'json',
+            SerializationContext::create()
+                ->setGroups(Usuario::getSerializationGroups(Usuario::VIEW_DEFAULT))
+                ->setSerializeNull(true)
+        );
+
+        $headers['Content-Type'] = 'application/json';
+
+        return new Response($jsonContent, 200, $headers);
 
     }
 }
