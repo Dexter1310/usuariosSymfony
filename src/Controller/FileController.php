@@ -59,8 +59,7 @@ class FileController extends BaseWebServiceController
 //        Todo:método de getResult():
 //        return   $this->jsonResponse($filter->getResults(), Usuario::VIEW_DEFAULT);
 //        Todo:método de getPagedResult():
-        $filter->setStart($filter->getStart());
-        $filter->setCount($filter->getCount());//todo: máximo de 10 registros
+
         return   $this->jsonResponse($filter->getPagedResults(),Usuario::VIEW_DEFAULT);
 
     }

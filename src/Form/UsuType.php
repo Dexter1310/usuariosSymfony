@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 
 class UsuType extends AbstractType
@@ -23,7 +24,7 @@ class UsuType extends AbstractType
             ->add('mail')
             ->add('adress')
             ->add('phone')
-            ->add('tipo',EntityType::class,['class'=>Tipo::class,'choice_label'=>'nombre'])
+            ->add('tipo',EntityType::class,['class'=>Tipo::class,'choice_label'=>'nombre','required'=>true,'constraints' =>[new NotBlank()]])
             ->add('admin',EntityType::class,['class'=>Administrador::class,'choice_label'=>'nombre','label'=>'Administrador'])
             ->add('enviar',SubmitType::class)
         ;

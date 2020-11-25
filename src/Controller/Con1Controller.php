@@ -73,7 +73,7 @@ class Con1Controller extends AbstractController
         return $this->render("con1/index.html.twig",['formCode'=>$formCode->createView(),'nombre'=>$usu]);
     }
 
-    /**  crear
+    /** Todo crear
      * @Route("/pagina2/", name="pagina2", methods={"POST","GET"} )
      */
     public function pagina2(Request $request)
@@ -81,7 +81,7 @@ class Con1Controller extends AbstractController
         $form = $this->createForm(UsuType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Usuario $user */
+//            /** @var Usuario $user */
             $user = $form->getData();
             $this->serviceUser->persistUser($user);
             return $this->redirectToRoute('pagina3');

@@ -76,11 +76,9 @@ class Usuario extends BaseEntity
 
 
     /**
-     * @var Tipo
      * @ORM\ManyToOne(targetEntity="App\Entity\Tipo", inversedBy="Usuario",cascade={"persist"})
      * @Serializer\Type("App\Entity\Tipo")
      * @Serializer\Groups({"default_usu"})
-
      */
     private $tipo;
 
@@ -159,17 +157,17 @@ class Usuario extends BaseEntity
     }
 
     /**
-     * @return Tipo
+     * @return mixed
      */
-    public function getTipo(): Tipo
+    public function getTipo()
     {
         return $this->tipo;
     }
 
     /**
-     * @param Tipo $tipo
+     * @param mixed $tipo
      */
-    public function setTipo(Tipo $tipo): void
+    public function setTipo( $tipo): void
     {
         $this->tipo = $tipo;
     }

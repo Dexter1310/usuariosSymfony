@@ -111,17 +111,24 @@
 {% block javascripts %}{{ parent() }}
     <script>
         $(document).ready(function () {
-            $('#list').DataTable();
+
             $('#listAdmin').DataTable();
             $('tr[data-href]').on("click", function () {
                 document.location = $(this).data('href');
             });
-            $('#peti').click(function () {
+            var count=$('select[name=list_length]').val();
+
+         $('#peti,#list_paginate ').click(function () {
                 var tipo = $('#filter_tipo').val();
                 var codigo = $('#filter_codigo').val();
                 var admin = $('#filter_admin').val();
-                console.log(tipo)
-                datos = {"filter[tipo]": tipo, "filter[codigo]": codigo, "filter[administrador]": admin,"filter[start]":1,"filter[count]":2};
+                var page=$('.dataTables_info').html();
+                var pageStart=page-1;
+                var table = $('#list').DataTable();
+                var info = table.page.info();
+                console.log("start: "+info.start + " start 'metodo javi'"+pageStart );
+
+                datos = {"filter[tipo]": tipo, "filter[codigo]": codigo, "filter[administrador]": admin,"filter[start]":info.start,"filter[count]":count};
                 $.ajax({
                     method: "GET",
                     url: "/peticion",
