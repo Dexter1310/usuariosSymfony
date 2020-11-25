@@ -33,7 +33,7 @@ class ServiceUser
         $this->entityManager->flush();
     }
 
-//   Todo:crear o actualizar administrador:
+    //Todo:crear o actualizar administrador:
     public function persistAdmin (Administrador $admin){
         $cate=$admin->getTipo();
         if($cate==Administrador::Principal){
@@ -49,11 +49,11 @@ class ServiceUser
         $this->entityManager->flush();
         return $admin;
     }
-//   Todo:busqueda de todos los administradores
+    //Todo:busqueda de todos los administradores
     public function findAdmin(){
         return $this->entityManager->getRepository(Administrador::class)->findAll();
     }
-//   Todo:eliminar administrador:
+    //Todo:eliminar administrador:
     public function removeAdmin(Administrador $administrador){
         $this->entityManager->remove($administrador);
         $this->entityManager->flush();
@@ -68,7 +68,7 @@ class ServiceUser
         return $consulta;
     }
 
-    // TODO: Tiene que devolver los Usuario que tengan asociado un tipo con el código recibido por parámetro
+    //TODO: Tiene que devolver los Usuario que tengan asociado un tipo con el código recibido por parámetro
     public function findUsuarioByCodigoTipo($codigo){
         $query=$this->entityManager->getRepository(Usuario::class)->createQueryBuilder(Usuario::alias)
             ->join(Usuario::alias.'.tipo',Tipo::ALIAS)
@@ -77,7 +77,7 @@ class ServiceUser
         return $query;
     }
 
-    // TODO: Tiene que devolver los Usuario que tengan asociado el administrador
+    //TODO: Tiene que devolver los Usuario que tengan asociado el administrador
     public function findUsuarioByAdmin($idAdmin){
         $query=$this->entityManager->getRepository(Usuario::class)->createQueryBuilder(Usuario::alias)
             ->join(Usuario::alias.'.admin',Administrador::ALIAS)

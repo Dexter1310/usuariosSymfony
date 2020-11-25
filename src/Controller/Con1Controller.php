@@ -81,7 +81,6 @@ class Con1Controller extends AbstractController
         $form = $this->createForm(UsuType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-//            /** @var Usuario $user */
             $user = $form->getData();
             $this->serviceUser->persistUser($user);
             return $this->redirectToRoute('pagina3');
@@ -171,7 +170,7 @@ class Con1Controller extends AbstractController
         $this->serviceUser->removeUser($usuario);
         return $this->redirectToRoute('pagina3',['mensaje'=>'Usuario con id:'.$ide.' eliminado']);
     }
-//    Todo: encontrar usuario por id
+    //Todo: encontrar usuario por id
     /**
      * @Route("/user/{id}", name="user_show")
      * @ParamConverter("usuario", class="App\Entity\Usuario")
