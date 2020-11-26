@@ -24,12 +24,10 @@ class Con1ControllerSubscriber  implements EventSubscriberInterface
     {
         if($event->getRequest()->getRequestUri()=="/pagina3/"){
             $this->twig->addGlobal('menu',"Menu de configuración");
+//            dump($event);
+//            die();
         }
-
-
-
 }
-
     public static function getSubscribedEvents()
     {
         return [

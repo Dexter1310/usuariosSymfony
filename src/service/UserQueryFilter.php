@@ -26,10 +26,14 @@ class UserQueryFilter extends AbstractDoctrineQueryFilter
      * @var int|null
      */
     private $codigo;
-
+    /**
+     * @var boolean|null
+     */
+    private $enabled;
 
     protected function applyFilter()
     {
+
         $aliasUsuario = $this->getBaseClassAlias();
 
         if (!is_null($this->tipo)) {
@@ -43,6 +47,10 @@ class UserQueryFilter extends AbstractDoctrineQueryFilter
         if (!is_null($this->codigo)) {
             $this->qb->andwhere(Tipo::ALIAS.'.codigo=:codigo')
                 ->setParameter('codigo', $this->codigo);
+        }
+        if (!is_null($this->enabled)) {
+            $this->qb->andwhere($aliasUsuario.'.enabled=:enabled')
+                ->setParameter('enabled', $this->enabled);
         }
     }
 
@@ -119,6 +127,22 @@ class UserQueryFilter extends AbstractDoctrineQueryFilter
     public function setCodigo(?int $codigo): void
     {
         $this->codigo = $codigo;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool|null $enabled
+     */
+    public function setEnabled(?bool $enabled): void
+    {
+        $this->enabled = $enabled;
     }
 
 

@@ -3,7 +3,7 @@
 {% block title %}{{ parent() }}pagina-2{% endblock %}
 {% block body %}
     <div class="container">
-        <h2 style="color: #5eb5e0">{{ menu }}
+        <h2 style="color: #5eb5e0">
             <hr>{{ mensaje }}</h2>
         {% for mess in app.flashes('success') %}
             <div class="alert alert-success">{{ mess }}</div>

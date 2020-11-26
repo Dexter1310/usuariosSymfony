@@ -6,6 +6,39 @@
 parameters:
 
 services:
+
+
+    App\EventSubscriber\DatabaseActivitySubscriber:
+        tags:
+            - { name: 'doctrine.event_subscriber' }
+
+
+
+#    App\EventSubscriber\PersistUser:
+##        tags:
+##            -
+##                name: 'doctrine.event_listener'
+##                # this is the only required option for the lifecycle listener tag
+##                event: 'postPersist'
+##
+##                # listeners can define their priority in case multiple listeners are associated
+##                # to the same event (default priority = 0; higher numbers = listener is run earlier)
+##                priority: 500
+##
+##                # you can also restrict listeners to a specific Doctrine connection
+##                connection: 'default'
+#
+#
+#
+#        tags:
+#
+#                name: 'doctrine.orm.entity_listener'
+#                event: 'postUpdate'
+#                entity: 'App\Entity\Usuario'
+
+
+
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

@@ -36,11 +36,11 @@ class ServiceUser
     //Todo:crear o actualizar administrador:
     public function persistAdmin (Administrador $admin){
         $cate=$admin->getTipo();
-        if($cate==Administrador::Principal){
+        if($cate==Administrador::PRINCIPAL){
             $admin->setCategoria('Principal');
-        }elseif ($cate==Administrador::Admin){
+        }elseif ($cate==Administrador::ADMIN){
             $admin->setCategoria('Admin');
-        }elseif($cate==Administrador::of1){
+        }elseif($cate==Administrador::OF1){
             $admin->setCategoria('Oficial 1');
         }else{
             $admin->setCategoria('Oficial 2');

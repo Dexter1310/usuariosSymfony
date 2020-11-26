@@ -44,7 +44,7 @@ class FileController extends BaseWebServiceController
     public function list(UserQueryFilter $filter, Request  $request)
     {
         $paged = $filter->getPagedResults();
-
+        $filter->setEnabled(1);
         $response = [
             'recordsTotal' => $paged->getTotalItems(),
             'recordsFiltered' => $paged->getTotalItems(),

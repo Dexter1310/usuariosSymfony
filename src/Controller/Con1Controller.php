@@ -3,6 +3,7 @@
 namespace App\Controller;
 use App\Entity\Administrador;
 use App\Entity\Tipo;
+use App\EventSubscriber\DatabaseActivitySubscriber;
 use App\Form\AdministradorType;
 use App\Form\FilterType;
 use App\Repository\UsuarioRepository;
@@ -98,11 +99,13 @@ class Con1Controller extends AbstractController
      */
     public function pagina3Action(Request $request)
     {
+        $newQF=new UserQueryFilter($this->containerSymfony);
         $usuario=$this->serviceUser->findUser();
         /** @var  $number int */
      $number=null;
      $usua=null;
      $found=null;
+
         $form=$this->createForm(FilterType::class);
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -110,7 +113,7 @@ class Con1Controller extends AbstractController
                 /** @var FilterType $filter */
                 $filter = $form->getData();
                 //Todo:función para comprobar los select que han sido filtrados:
-                $newQF=new UserQueryFilter($this->containerSymfony);
+
                 if($filter['admin']){
                     $newQF->setAdministrador($filter['admin']->getId());
                 }
@@ -120,11 +123,13 @@ class Con1Controller extends AbstractController
                 if($filter['codigo']){
                     $newQF->setCodigo($filter['codigo']->getId());
                 }
-
                 $usua=$newQF->getResults();
                 $found='Usuarios encontrados: '.count($usua);
             }
         }
+
+//        dump($newQF->getEnabled());die();
+
         return $this->render('con1/pagina3.html.twig',['busqueda'=>$usuario,'mensaje'=>$found,
             'usua'=>$usua,'mens'=>$number,'formulari'=>$form->createView()]);
     }

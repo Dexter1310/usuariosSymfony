@@ -4,7 +4,7 @@ $(document).ready(function () {
             language: {
                 "decimal": "",
                 "emptyTable": "No hay información",
-                "info": "_START_",
+                "info": "Muestra _START_ a  _END_ registros",
                 "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
                 "infoFiltered": "(Filtrado de _MAX_ total entradas)",
                 "infoPostFix": "",
@@ -15,8 +15,8 @@ $(document).ready(function () {
                 "search": "Buscar:",
                 "zeroRecords": "Sin resultados encontrados",
                 "paginate": {
-                    "first": "Primero",
-                    "last": "Ultimo",
+                    "first": "",
+                    "last": "",
                     "next": "Siguiente",
                     "previous": "Anterior"
                 }
@@ -26,7 +26,7 @@ $(document).ready(function () {
                 "url": "/peticion",
                 "type": "GET",
                 'data': function (d) {
-
+                    console.log(d)
                     // AQUI PODEMOS MANIPULAR LOS PARAMETROS QUE PASAMOS EN EL GET, EN ESTE CASO PASAMOS EL FILTER
                     return {
                         "filter[tipo]": $('#filter_tipo').val(),
@@ -41,8 +41,8 @@ $(document).ready(function () {
             "paging": true,
             "processing": true,
             "displayStart": 0,
-            "lengthMenu": [2, 3, 4, 5], // las opciones count que quieras poner
-            "pageLength": 2,
+            "lengthMenu": [5, 10, 15, 20], // las opciones count que quieras poner
+            "pageLength": 5,
             "pagingType": "full_numbers",
             "rowId": "id",
             "columns": [
@@ -61,8 +61,6 @@ $(document).ready(function () {
                     }},
                 {
                     "render": function (data, type, row) {
-
-                        console.log(type)
                         var html = '';
                         html = "<a href='/pagina3/" + row.id + "'><button class='btn btn-danger'>Borrar</button></a>" + "" +
                             "<a href='/pagina4/" + row.id + "'><button class='btn btn-warning'>Editar</button></a>";
@@ -75,8 +73,6 @@ $(document).ready(function () {
     $('#peti').click(function (){
             table.ajax.reload();
     })
-
-
     $('#listAdmin').DataTable();
     $('tr[data-href]').on("click", function () {
         document.location = $(this).data('href');
