@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Administrador;
 use App\Entity\Tipo;
 use App\EventSubscriber\DatabaseActivitySubscriber;
+use App\EventSubscriber\UsuarioEvent;
 use App\Form\AdministradorType;
 use App\Form\FilterType;
 use App\Repository\UsuarioRepository;
@@ -14,10 +15,13 @@ use App\service\ServiceUser;
 use App\service\UserQueryFilter;
 use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManagerInterface;
+use JMS\Serializer\EventDispatcher\Event;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+//use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -151,6 +155,14 @@ class Con1Controller extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 $user = $form->getData();
                 $this->serviceUser->persistUser($user);
+                //Todo:event EventDispatcher()
+                $event = new UsuarioEvent($user);
+                $usuarioEvent =  new EventDispatcher();
+                $usuarioEvent->dispatch($event,UsuarioEvent::NAME);
+               if($event->getUser()){
+                   $event->getUser()->setEnabled(1);
+//                   dump($user->isEnabled());die();
+               }
                 $this->addFlash(
                     'success','Usuario '.$usuario->getNombre().' actualizado.'
                 );

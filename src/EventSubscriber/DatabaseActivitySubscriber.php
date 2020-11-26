@@ -14,6 +14,7 @@ class DatabaseActivitySubscriber implements EventSubscriber
     {
         return [
             Events::prePersist,
+            Events::postUpdate,
         ];
     }
 
@@ -25,6 +26,16 @@ class DatabaseActivitySubscriber implements EventSubscriber
             $usuario->setEnabled(true);
             // No hace falta hacer persist ni flush, porqué el evento prePersist se lanza antes de que doctrine los ejecute
         }
+    }
+    public function postUpdate(LifecycleEventArgs $args): void
+    {
+//        if ($this->isUsuario($args->getObject())) {
+//            /** @var Usuario $usuario */
+//            $usuario = $args->getObject();
+//            dump("edito");die();
+////            $usuario->setEnabled(true);
+//
+//        }
     }
 
 
