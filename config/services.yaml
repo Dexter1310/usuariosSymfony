@@ -6,14 +6,6 @@
 parameters:
 
 services:
-
-
-    App\EventSubscriber\DatabaseActivitySubscriber:
-        tags:
-            - { name: 'doctrine.event_subscriber' }
-
-
-
 #    App\EventSubscriber\PersistUser:
 ##        tags:
 ##            -
@@ -77,3 +69,7 @@ services:
         arguments: [ [ '@app.query_filter.order.converter' ] ]
 
     DigitalAscetic\QueryFilterBundle\Service\DelegateParameterConverter: '@app.query_filter.param.converter'
+
+    App\EventSubscriber\DatabaseActivitySubscriber:
+        tags:
+            - { name: 'doctrine.event_subscriber' }
