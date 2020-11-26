@@ -2,6 +2,7 @@
 
 
 namespace App\EventSubscriber;
+
 use Doctrine\Common\EventSubscriber;
 use App\Entity\Usuario;
 use Doctrine\ORM\Events;
@@ -13,35 +14,23 @@ class DatabaseActivitySubscriber implements EventSubscriber
     {
         return [
             Events::prePersist,
-            Events::postRemove,
-            Events::postUpdate,
         ];
     }
+
     public function prePersist(LifecycleEventArgs $args): void
     {
-        $this->logActivity('persist', $args);
-    }
-    public function postRemove(LifecycleEventArgs $args): void
-    {
-        $this->logActivity('remove', $args);
-    }
-
-    public function postUpdate(LifecycleEventArgs $args): void
-    {
-        $this->logActivity('update', $args);
-    }
-
-    private function logActivity(string $action, LifecycleEventArgs $args): void
-    {
-        $entity = $args->getObject();
-
-       $em= $args->getObjectManager();
-        if ($entity instanceof Usuario) {
-            $entity->setEnabled(1);
-            $em->persist($entity);
-            $em->flush();
+        if ($this->isUsuario($args->getObject())) {
+            /** @var Usuario $usuario */
+            $usuario = $args->getObject();
+            $usuario->setEnabled(true);
+            // No hace falta hacer persist ni flush, porqué el evento prePersist se lanza antes de que doctrine los ejecute
         }
+    }
 
+
+    private function isUsuario($entity)
+    {
+        return $entity instanceof Usuario;
     }
 }
 
