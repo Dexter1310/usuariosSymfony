@@ -90,6 +90,14 @@ class Usuario extends BaseEntity
      */
     private $admin;
 
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean", nullable=false, options={"default" : 0})
+     * @Serializer\Type("bool")
+     * @Serializer\Groups({"default_usu"})
+     */
+    private $enabled;
+
 
     /**
      * Usuario constructor.
@@ -104,8 +112,8 @@ class Usuario extends BaseEntity
         $this->mail = $mail;
         $this->adress = $adress;
         $this->phone = $phone;
+        $this->enabled = false;
     }
-
 
 
     public function getNombre(): ?string
@@ -188,6 +196,20 @@ class Usuario extends BaseEntity
         $this->admin = $admin;
     }
 
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
 
+    /**
+     * @param bool $enabled
+     */
+    public function setEnabled(bool $enabled): void
+    {
+        $this->enabled = $enabled;
+    }
 
 }
