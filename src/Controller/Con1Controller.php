@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\Administrador;
 use App\Entity\Tipo;
 use App\EventSubscriber\DatabaseActivitySubscriber;
@@ -40,12 +41,8 @@ class Con1Controller extends AbstractController
     private $entityManager;
     /** @var ServiceUser $serviceUser */
     private $serviceUser;
-
-    /**
-     * @var ContainerInterface $container
-     */
+    /* @var ContainerInterface $container */
     protected $containerSymfony;
-
     /** @var EventDispatcherInterface */
     private $dispatcher;
 
@@ -56,7 +53,7 @@ class Con1Controller extends AbstractController
      * @param $serviceUser
      * @param $userQueryFilter
      */
-    public function __construct(ContainerInterface $container, NewMessage $men, EntityManagerInterface $entityManager, ServiceUser $serviceUser,EventDispatcherInterface $dispatcher)
+    public function __construct(ContainerInterface $container, NewMessage $men, EntityManagerInterface $entityManager, ServiceUser $serviceUser, EventDispatcherInterface $dispatcher)
     {
         $this->containerSymfony = $container;
         $this->men = $men;
@@ -68,19 +65,20 @@ class Con1Controller extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(Request $request){
-        $code=null;
+    public function index(Request $request)
+    {
+        $code = null;
         $formCode = $this->createFormBuilder()->add('codigo')
-            ->add('buscar',SubmitType::class)->getForm();
+            ->add('buscar', SubmitType::class)->getForm();
         if ($request->getMethod() == 'POST') {
             $formCode->handleRequest($request);
             if ($formCode->isSubmitted() && $formCode->isValid()) {
                 $userCode = $formCode->getData();
-                $code=$userCode['codigo'];
+                $code = $userCode['codigo'];
             }
         }
-        $usu=$this->serviceUser->findUsuarioByCodigoTipo($code);
-        return $this->render("con1/index.html.twig",['formCode'=>$formCode->createView(),'nombre'=>$usu]);
+        $usu = $this->serviceUser->findUsuarioByCodigoTipo($code);
+        return $this->render("con1/index.html.twig", ['formCode' => $formCode->createView(), 'nombre' => $usu]);
     }
 
     /** Todo crear
@@ -93,6 +91,8 @@ class Con1Controller extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
             $this->serviceUser->persistUser($user);
+            $event = new UsuarioEvent($user);
+            $this->dispatcher->dispatch($event, UsuarioEvent::USERMAIL);
             return $this->redirectToRoute('pagina3');
         }
         return $this->render(
@@ -103,19 +103,20 @@ class Con1Controller extends AbstractController
             ]
         );
     }
+
     /** visualizar
      * @Route("/pagina3/", name="pagina3",methods={"POST","GET"})
      */
     public function pagina3Action(Request $request)
     {
-        $newQF=new UserQueryFilter($this->containerSymfony);
-        $usuario=$this->serviceUser->findUser();
+        $newQF = new UserQueryFilter($this->containerSymfony);
+        $usuario = $this->serviceUser->findUser();
         /** @var  $number int */
-     $number=null;
-     $usua=null;
-     $found=null;
+        $number = null;
+        $usua = null;
+        $found = null;
 
-        $form=$this->createForm(FilterType::class);
+        $form = $this->createForm(FilterType::class);
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
@@ -123,31 +124,29 @@ class Con1Controller extends AbstractController
                 $filter = $form->getData();
                 //Todo:función para comprobar los select que han sido filtrados:
 
-                if($filter['admin']){
+                if ($filter['admin']) {
                     $newQF->setAdministrador($filter['admin']->getId());
                 }
-                if($filter['tipo']){
+                if ($filter['tipo']) {
                     $newQF->setTipo($filter['tipo']->getId());
                 }
-                if($filter['codigo']){
+                if ($filter['codigo']) {
                     $newQF->setCodigo($filter['codigo']->getId());
                 }
-                $usua=$newQF->getResults();
-                $found='Usuarios encontrados: '.count($usua);
+                $usua = $newQF->getResults();
+                $found = 'Usuarios encontrados: ' . count($usua);
             }
         }
 
-//        dump($newQF->getEnabled());die();
-
-        return $this->render('con1/pagina3.html.twig',['busqueda'=>$usuario,'mensaje'=>$found,
-            'usua'=>$usua,'mens'=>$number,'formulari'=>$form->createView()]);
+        return $this->render('con1/pagina3.html.twig', ['busqueda' => $usuario, 'mensaje' => $found,
+            'usua' => $usua, 'mens' => $number, 'formulari' => $form->createView()]);
     }
 
     /**  Actualizar
      * @Route("/pagina4/{id}", requirements={"id" = "^\d+$"}, name="update", methods={"POST","GET"})
      * @ParamConverter("usuario", class="App\Entity\Usuario")
      */
-    public function actualizar(Usuario $usuario,Request $request)
+    public function actualizar(Usuario $usuario, Request $request)
     {
         /**
          * Al método createForm, se le puede pasar el objeto con el que inicializar el formulario.
@@ -162,19 +161,20 @@ class Con1Controller extends AbstractController
 //                $this->serviceUser->persistUser($user);
                 //Todo:event EventDispatcher()
                 $event = new UsuarioEvent($user);
-                $this->dispatcher->dispatch($event,UsuarioEvent::NAME);
+                $this->dispatcher->dispatch($event, UsuarioEvent::NAME);
 
                 $this->addFlash(
-                    'success','Usuario '.$usuario->getNombre().' actualizado.'
+                    'success', 'Usuario ' . $usuario->getNombre() . ' actualizado.'
                 );
-                $userCreate='Usuario '.$usuario->getNombre().' actualizado.';
+                $userCreate = 'Usuario ' . $usuario->getNombre() . ' actualizado.';
                 return $this->redirectToRoute('pagina3', ['mensaje' => $userCreate]);
             }
         }
 
-        return $this->render('con1/pagina4.html.twig', ['variable2' => 'Actualizar', 'usuario'=>$usuario, 'formul'=>$form->createView()]
+        return $this->render('con1/pagina4.html.twig', ['variable2' => 'Actualizar', 'usuario' => $usuario, 'formul' => $form->createView()]
         );
     }
+
     /**  Eliminar
      * @Route("/pagina3/{id}/", requirements={"id" = "^\d+$"}, name="borrar")
      * @ParamConverter("usuario", class="App\Entity\Usuario")
@@ -186,9 +186,10 @@ class Con1Controller extends AbstractController
          */
         $ide = $usuario->getId();
         $this->serviceUser->removeUser($usuario);
-        return $this->redirectToRoute('pagina3',['mensaje'=>'Usuario con id:'.$ide.' eliminado']);
+        return $this->redirectToRoute('pagina3', ['mensaje' => 'Usuario con id:' . $ide . ' eliminado']);
     }
     //Todo: encontrar usuario por id
+
     /**
      * @Route("/user/{id}", name="user_show")
      * @ParamConverter("usuario", class="App\Entity\Usuario")
@@ -198,28 +199,29 @@ class Con1Controller extends AbstractController
         $us = $usuario->getId();
         if (!$us) {
             throw $this->createNotFoundException(
-                'No User found for id '.$us
+                'No User found for id ' . $us
             );
         }
-        return $this->redirectToRoute('pagina3',['mensaje'=>
-            'Usuario: '.$usuario->getNombre().' - Tipo: '.$usuario->getTipo()->getNombre().' - Administrador : '.$usuario->getAdmin()->getNombre()]);
+        return $this->redirectToRoute('pagina3', ['mensaje' =>
+            'Usuario: ' . $usuario->getNombre() . ' - Tipo: ' . $usuario->getTipo()->getNombre() . ' - Administrador : ' . $usuario->getAdmin()->getNombre()]);
     }
+
     /**
      * @Route("/findAdmin", name="findAdmin",methods={"POST","GET"})
      */
     public function findAdmin(Request $request)
     {
-        $formAdmin=$this->createForm(AdministradorType::class);
+        $formAdmin = $this->createForm(AdministradorType::class);
         if ($request->getMethod() == 'POST') {
             $formAdmin->handleRequest($request);
             if ($formAdmin->isSubmitted() && $formAdmin->isValid()) {
                 $admin = $formAdmin->getData();
-                $mens=$this->serviceUser->findParameter($admin->getTipo());
-                $nombre=$mens->getNombre();
-                return $this->redirectToRoute('pagina3',['mensaje'=>$nombre]);
+                $mens = $this->serviceUser->findParameter($admin->getTipo());
+                $nombre = $mens->getNombre();
+                return $this->redirectToRoute('pagina3', ['mensaje' => $nombre]);
             }
-            }
-        return $this->render("con1/findAdmin.html.twig",['formAdmin'=>$formAdmin->createView()]);
+        }
+        return $this->render("con1/findAdmin.html.twig", ['formAdmin' => $formAdmin->createView()]);
     }
 
 }

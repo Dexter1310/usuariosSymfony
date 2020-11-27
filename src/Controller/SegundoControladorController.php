@@ -10,12 +10,12 @@ class SegundoControladorController extends AbstractController
     /**
      * @Route("/info/{nombre}/{apellidos}/", name="info")
      */
-    public function info($nombre,$apellidos)
+    public function info($nombre, $apellidos)
     {
         return $this->render('segundo_controlador/info.html.twig', [
             'controller_name' => 'SegundoControladorController',
-            'nombre'=> $nombre,
-            'apellidos'=> $apellidos
+            'nombre' => $nombre,
+            'apellidos' => $apellidos
         ]);
     }
 }

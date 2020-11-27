@@ -9,6 +9,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 class UsuarioEvent extends Event
 {
     public const NAME = 'user.placed';
+    public const USERMAIL = 'user.mail';
     protected $user;
     /**
      * UsuarioEvent constructor.
