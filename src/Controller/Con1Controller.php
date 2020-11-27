@@ -5,6 +5,7 @@ use App\Entity\Administrador;
 use App\Entity\Tipo;
 use App\EventSubscriber\DatabaseActivitySubscriber;
 use App\EventSubscriber\UsuarioEvent;
+use App\EventSubscriber\UsuarioEventSubscriber;
 use App\Form\AdministradorType;
 use App\Form\FilterType;
 use App\Repository\UsuarioRepository;
@@ -20,7 +21,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-//use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -159,10 +159,6 @@ class Con1Controller extends AbstractController
                 $event = new UsuarioEvent($user);
                 $usuarioEvent =  new EventDispatcher();
                 $usuarioEvent->dispatch($event,UsuarioEvent::NAME);
-               if($event->getUser()){
-                   $event->getUser()->setEnabled(1);
-//                   dump($user->isEnabled());die();
-               }
                 $this->addFlash(
                     'success','Usuario '.$usuario->getNombre().' actualizado.'
                 );

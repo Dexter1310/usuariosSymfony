@@ -23,7 +23,6 @@ class FileController extends BaseWebServiceController
 {
     private $containerSymfony;
     private $serviceUser;
-
     /**
      * FileController constructor.
      * @param $containerSymfony
@@ -36,7 +35,6 @@ class FileController extends BaseWebServiceController
         $this->containerSymfony = $containerSymfony;
         $this->serviceUser = $serviceUser;
     }
-
     /**
      * @Route("/peticion", name="peticion", methods={"GET", "OPTIONS"})
      * @ParamConverter("filter", class="App\service\UserQueryFilter", options={"alwaysCreate", "params"={"@service_container"}})
@@ -58,10 +56,7 @@ class FileController extends BaseWebServiceController
                 ->setGroups(Usuario::getSerializationGroups(Usuario::VIEW_DEFAULT))
                 ->setSerializeNull(true)
         );
-
         $headers['Content-Type'] = 'application/json';
-
         return new Response($jsonContent, 200, $headers);
-
     }
 }
