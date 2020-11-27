@@ -22,6 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,6 +46,9 @@ class Con1Controller extends AbstractController
      */
     protected $containerSymfony;
 
+    /** @var EventDispatcherInterface */
+    private $dispatcher;
+
     /**
      * Con1Controller constructor.
      * @param $men
@@ -52,12 +56,13 @@ class Con1Controller extends AbstractController
      * @param $serviceUser
      * @param $userQueryFilter
      */
-    public function __construct(ContainerInterface $container, NewMessage $men, EntityManagerInterface $entityManager, ServiceUser $serviceUser,UserQueryFilter $userQueryFilter)
+    public function __construct(ContainerInterface $container, NewMessage $men, EntityManagerInterface $entityManager, ServiceUser $serviceUser,EventDispatcherInterface $dispatcher)
     {
         $this->containerSymfony = $container;
         $this->men = $men;
         $this->entityManager = $entityManager;
         $this->serviceUser = $serviceUser;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -157,10 +162,7 @@ class Con1Controller extends AbstractController
 //                $this->serviceUser->persistUser($user);
                 //Todo:event EventDispatcher()
                 $event = new UsuarioEvent($user);
-                $usuarioEvent =  new EventDispatcher();
-                $usuSubscriber=new UsuarioEventSubscriber($this->entityManager);
-                $usuarioEvent->addSubscriber($usuSubscriber);
-                $usuarioEvent->dispatch($event,UsuarioEvent::NAME);
+                $this->dispatcher->dispatch($event,UsuarioEvent::NAME);
 
                 $this->addFlash(
                     'success','Usuario '.$usuario->getNombre().' actualizado.'

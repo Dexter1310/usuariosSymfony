@@ -20,6 +20,13 @@ class UsuarioEventSubscriber implements EventSubscriberInterface
         $this->em = $em;
     }
 
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            UsuarioEvent::NAME=> 'handleUserEnabled'
+        ];
+    }
+
     public function handleUserEnabled(UsuarioEvent $event)
     {
         $usuario=$event->getUser();
@@ -27,12 +34,6 @@ class UsuarioEventSubscriber implements EventSubscriberInterface
         $this->em->persist($usuario);
         $this->em->flush();
         // persistir en base de datos
-    }
-    public static function getSubscribedEvents(): array
-    {
-        return [
-            UsuarioEvent::NAME=> 'handleUserEnabled'
-        ];
     }
 
 }

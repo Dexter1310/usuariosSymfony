@@ -73,3 +73,7 @@ services:
     App\EventSubscriber\DatabaseActivitySubscriber:
         tags:
             - { name: 'doctrine.event_subscriber' }
+
+    App\EventSubscriber\UsuarioEventSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
