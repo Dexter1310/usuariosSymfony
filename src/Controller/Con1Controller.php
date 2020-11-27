@@ -154,11 +154,14 @@ class Con1Controller extends AbstractController
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $user = $form->getData();
-                $this->serviceUser->persistUser($user);
+//                $this->serviceUser->persistUser($user);
                 //Todo:event EventDispatcher()
                 $event = new UsuarioEvent($user);
                 $usuarioEvent =  new EventDispatcher();
+                $usuSubscriber=new UsuarioEventSubscriber($this->entityManager);
+                $usuarioEvent->addSubscriber($usuSubscriber);
                 $usuarioEvent->dispatch($event,UsuarioEvent::NAME);
+
                 $this->addFlash(
                     'success','Usuario '.$usuario->getNombre().' actualizado.'
                 );

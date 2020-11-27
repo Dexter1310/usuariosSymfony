@@ -5,6 +5,7 @@ namespace App\EventSubscriber;
 use App\Entity\Usuario;
 use Symfony\Contracts\EventDispatcher\Event;
 
+
 class UsuarioEvent extends Event
 {
     public const NAME = 'user.placed';

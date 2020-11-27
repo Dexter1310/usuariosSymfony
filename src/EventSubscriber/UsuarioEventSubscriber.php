@@ -2,38 +2,37 @@
 
 
 namespace App\EventSubscriber;
-use App\Entity\Usuario;
-use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Events;
-use Doctrine\Persistence\Event\LifecycleEventArgs;
 
-class UsuarioEventSubscriber implements EventSubscriber
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+
+
+class UsuarioEventSubscriber implements EventSubscriberInterface
 {
-    public function getSubscribedEvents(): array
+    private $em;
+    /**
+     * UsuarioEventSubscriber constructor.
+     * @param $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    public function handleUserEnabled(UsuarioEvent $event)
+    {
+        $usuario=$event->getUser();
+        $usuario->setEnabled(true);
+        $this->em->persist($usuario);
+        $this->em->flush();
+        // persistir en base de datos
+    }
+    public static function getSubscribedEvents(): array
     {
         return [
-            Events::postUpdate,
+            UsuarioEvent::NAME=> 'handleUserEnabled'
         ];
     }
-    public function postUpdate(LifecycleEventArgs $args): void
-    {
-        if ($this->isUsuario($args->getObject())) {
-            /** @var Usuario $usuario */
-            $usuario = $args->getObject();
-            $usuario->setEnabled(1);
-            print_r('Usuario modificado estos son los datos obtenidos:<br><hr>
-            Nombre : '.$usuario->getNombre().
-            '<br>Dirección : '.$usuario->getAdress().
-                '<br>Phone : '.$usuario->getPhone().
-                '<br>Administrador  : '.$usuario->getAdmin()->getNombre().
-                '<br>Tipo : '.$usuario->getTipo()->getnombre().
-                '<br>Mail : '.$usuario->getMail().
-                '<br><b>Enabled: '.$usuario->isEnabled().'</b><br><hr>
-                <a href="/pagina3">Torna</a>');die();
-        }
-    }
-    private function isUsuario($entity)
-    {
-        return $entity instanceof Usuario;
-    }
+
 }

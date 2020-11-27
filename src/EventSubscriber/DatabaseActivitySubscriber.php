@@ -24,7 +24,6 @@ class DatabaseActivitySubscriber  implements EventSubscriber
     {
         return [
             Events::prePersist,
-
         ];
     }
     public function prePersist(LifecycleEventArgs $args): void
