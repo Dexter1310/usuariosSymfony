@@ -3,21 +3,27 @@
 
 namespace App\EventSubscriber;
 
+use App\service\NewMessage;
+use App\service\ServiceUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
+use Symfony\Component\Mailer\MailerInterface;
 
 
 class UsuarioEventSubscriber implements EventSubscriberInterface
 {
     private $em;
+    private $mailer;
+
     /**
      * UsuarioEventSubscriber constructor.
      * @param $em
+     * @param $mailer
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em,NewMessage $mailer)
     {
         $this->em = $em;
+        $this->mailer = $mailer;
     }
 
     public static function getSubscribedEvents(): array
@@ -39,8 +45,8 @@ class UsuarioEventSubscriber implements EventSubscriberInterface
     }
     public function sendMail(UsuarioEvent $event)
     {
-        print_r('codigo para el send mail');die();
 
+      $this->mailer->sendMail($event->getUser());
     }
 
 }

@@ -90,9 +90,12 @@ class Con1Controller extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
-            $this->serviceUser->persistUser($user);
             $event = new UsuarioEvent($user);
             $this->dispatcher->dispatch($event, UsuarioEvent::USERMAIL);
+
+            $this->addFlash(
+                'success', $this->men->mensa
+            );
             return $this->redirectToRoute('pagina3');
         }
         return $this->render(
@@ -162,7 +165,6 @@ class Con1Controller extends AbstractController
                 //Todo:event EventDispatcher()
                 $event = new UsuarioEvent($user);
                 $this->dispatcher->dispatch($event, UsuarioEvent::NAME);
-
                 $this->addFlash(
                     'success', 'Usuario ' . $usuario->getNombre() . ' actualizado.'
                 );
