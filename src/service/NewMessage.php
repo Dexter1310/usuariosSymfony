@@ -3,6 +3,7 @@
 namespace App\service;
 
 use App\Entity\Usuario;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\Exception\TransportException;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -13,14 +14,17 @@ class NewMessage
 {
     private $mail;
     public $mensa;
+    private $entityManager;
 
     /**
      * NewMessage constructor.
      * @param $mail
+     * @param $entityManager
      */
-    public function __construct(MailerInterface $mail)
+    public function __construct(MailerInterface $mail ,EntityManagerInterface $entityManager)
     {
         $this->mail = $mail;
+        $this->entityManager=$entityManager;
     }
 
     public function getHappyMessage(): string
@@ -36,6 +40,9 @@ class NewMessage
 
     public function sendMail(Usuario $us)
     {
+        $service=new ServiceUser($this->entityManager);
+        $service->persistUser($us);
+
         try{
         $email = (new Email())
             ->from('insorti@gmail.com')

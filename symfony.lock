@@ -165,7 +165,7 @@
         "version": "2.2.3"
     },
     "php": {
-        "version": "7.4"
+        "version": "7.2"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
@@ -266,6 +266,9 @@
     },
     "symfony/dependency-injection": {
         "version": "v4.3.4"
+    },
+    "symfony/deprecation-contracts": {
+        "version": "v2.2.0"
     },
     "symfony/doctrine-bridge": {
         "version": "v4.3.4"

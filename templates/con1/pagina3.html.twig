@@ -54,7 +54,6 @@
             <button class="btn btn-info">Encontrar administrador por tipo</button>
         </a>
         <button id="peti" class="btn btn-danger">Petición</button>
-        {# <center><p style='color:red;'>{{ app.request.get('mens.tipo') }}</p></center> #}
         <hr>
         <div class="container" style="text-align: center"><p style='color:blue;'>{{ app.request.get('mensaje') }}</p>
         </div>
@@ -88,13 +87,10 @@
 {% block javascripts %}{{ parent() }}
     <script>
         $(document).ready(function () {
-
             $('#listAdmin').DataTable();
             $('tr[data-href]').on("click", function () {
                 document.location = $(this).data('href');
             });
-
-
             var count=$('select[name=list_length]').val();
         });
     </script>

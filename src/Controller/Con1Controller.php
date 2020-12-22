@@ -92,7 +92,6 @@ class Con1Controller extends AbstractController
             $user = $form->getData();
             $event = new UsuarioEvent($user);
             $this->dispatcher->dispatch($event, UsuarioEvent::USERMAIL);
-
             $this->addFlash(
                 'success', $this->men->mensa
             );
